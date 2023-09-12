@@ -1,0 +1,37 @@
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+#search {
+  background-image: url('src/assets/medicalCenter.jpg');
+  background-size: 100%;
+}
+
+#top-nav,
+#main-nav-dropdown,
+#Faqs {
+  background-color: #9ae6cc;
+}
+
+#footer {
+  background-color: rgb(61, 131, 223);
+}
+
+.search {
+  color: white;
+  background-color: #366153;
+}
+
+.search-2 {
+  color: white;
+  background-color: #2bad82;
+}
+
+.search-3 {
+  color: white;
+  background-color: #38e0a8;
+}
+
+.review-card {
+  background-color: #9ae6cc;
+}
