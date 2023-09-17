@@ -82,7 +82,7 @@ export default function Home() {
             </ul>
           </div>
           <div className="px-md-5">
-            <img src="assets/faqs.png" alt="Faqs" />
+            <img src="/assets/faqs.png" alt="Faqs" />
           </div>
         </div>
       </section>
