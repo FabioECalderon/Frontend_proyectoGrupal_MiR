@@ -36,7 +36,7 @@ export default function MainNav() {
               </NavLink>
               <NavDropdown
                 title={
-                  user ? <span> Hola {user.email} </span> : 'Zona de usuario'
+                  user ? <span> Hola {user.fullName} </span> : 'Zona de usuario'
                 }
                 id="main-nav-dropdown"
               >
@@ -67,7 +67,7 @@ export default function MainNav() {
                     <NavLink to="/user/appointments" className="dropdown-item">
                       Mis citas
                     </NavLink>
-                    {user && user.isAdmin && (
+                    {user && user.userType === 'admin' && (
                       <>
                         <NavDropdown.Divider />
                         <NavLink

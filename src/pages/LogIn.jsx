@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 import UserContext from '../containers/UserContext';
 import { useNavigate, NavLink } from 'react-router-dom';
+import { signIn } from '../api/users';
 
 const signInSchema = z.object({
   email: z.string().email('El email no es válido'),
@@ -33,12 +34,12 @@ export default function LogIn() {
           <h1 className="fs-4 my-5 mx-3">Ingresa a tu cuenta</h1>
           <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                setUser({ email: values.email, isAdmin: true });
-                setSubmitting(false);
-                navigate('/home');
-              }, 100);
+            onSubmit={async (values, { setSubmitting }) => {
+              const { data } = await signIn(values);
+
+              setUser(data);
+              setSubmitting(false);
+              navigate('/home');
             }}
             validationSchema={toFormikValidationSchema(signInSchema)}
           >
