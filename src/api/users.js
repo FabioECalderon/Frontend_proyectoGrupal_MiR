@@ -1,4 +1,5 @@
 import http from './http';
+import { setSession } from './session';
 
 export async function signIn({ email, password }) {
   try {
@@ -6,7 +7,11 @@ export async function signIn({ email, password }) {
       email,
       password,
     });
-    const { data } = response;
+    const { data, meta } = response;
+    const { token = '' } = meta;
+
+    setSession(token);
+
     return { data };
   } catch (error) {
     return Promise.reject(error.message);

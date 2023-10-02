@@ -6,6 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { NavLink } from 'react-router-dom';
 import UserContext from '../containers/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { clearSession } from '../api/session';
 
 export default function MainNav() {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ export default function MainNav() {
 
   function LogOut() {
     setTimeout(() => {
-      setUser((user) => null);
+      setUser(null);
+      clearSession();
       navigate('/home');
     }, 100);
   }
