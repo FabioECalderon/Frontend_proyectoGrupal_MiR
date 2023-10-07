@@ -1,14 +1,27 @@
 describe('template spec', () => {
-  it('passes', () => {
-    cy.fixture('user.json').then((user) => {
-      cy.visit('/login');
+  beforeEach(function () {
+    cy.fixture('user.json').as('user');
+  });
 
-      cy.get('input[name="email"]').type(user.email);
-      cy.get('input[name="password"]').type(user.password);
+  it.only('Passes with correct credentials', function () {
+    cy.visit('/login');
 
-      cy.get('button[type="submit"]').click();
+    cy.get('input[name="email"]').type(this.user.email);
+    cy.get('input[name="password"]').type(this.user.password);
 
-      cy.contains(`Hola ${user.name}`);
-    });
+    cy.get('button[type="submit"]').click();
+
+    cy.contains(`Hola ${this.user.name}`);
+  });
+
+  it('Fails with incorrect credentials', function () {
+    cy.visit('/login');
+
+    cy.get('input[name="email"]').type(this.user.email);
+    cy.get('input[name="password"]').type(1234567);
+
+    cy.get('button[type="submit"]').click();
+
+    cy.contains(`invalid email or password`);
   });
 });
