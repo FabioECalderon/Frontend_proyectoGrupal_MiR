@@ -19,6 +19,7 @@ import User from './pages/User';
 import UserConfiguration from './pages/UserConfiguration';
 import SavedSpecilists from './pages/SavedSpecilists';
 import Appointments from './pages/Appointments';
+import { SearchProvider } from './containers/SearchContext';
 
 function App() {
   return (
@@ -26,9 +27,23 @@ function App() {
       <MainNav />
       <Suspense fallback={null}>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route
+            path="/home"
+            element={
+              <SearchProvider>
+                <Home />
+              </SearchProvider>
+            }
+          />
           <Route path="/faqs" element={<Faqs />} />
-          <Route path="/searchResults" element={<SearchResults />} />
+          <Route
+            path="/searchResults"
+            element={
+              <SearchProvider>
+                <SearchResults />
+              </SearchProvider>
+            }
+          />
           <Route path="/login" element={<LogIn />} />
           <Route path="/restore" element={<PasswordRestore />} />
 

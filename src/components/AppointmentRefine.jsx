@@ -4,14 +4,17 @@ import { getSpecialties } from '../api/specialties';
 import { getCenters } from '../api/centers';
 import SearchContext from '../containers/SearchContext';
 
-export default function AppointmentSearch() {
+export default function AppointmentRefine() {
   const navigate = useNavigate();
   const [availableSpecialties, setAvailableSpecialties] = useState([]);
   const [availableCenters, setAvailableCenters] = useState([]);
-  const [selectedSpecialty, setSelectedSpecialty] = useState({ id: '' });
-  const [selectedCenter, setSelectedCenter] = useState({ id: '' });
+  const [selectedCenter, setSelectedCenter] = useState(searchParams.specialty);
+  const [selectedDate, setSelectedDate] = useState(searchParams.date);
+  const [selectedSpecialty, setSelectedSpecialty] = useState(
+    searchParams.specialty,
+  );
   const [error, setError] = useState('');
-  const { setSearchParams } = useContext(SearchContext);
+  const { searchParams, setSearchParams } = useContext(SearchContext);
 
   async function loadSpecialties() {
     try {
@@ -38,9 +41,9 @@ export default function AppointmentSearch() {
       ? event.target.date.value
       : dateToday;
     const newSearchParams = {
-      center: selectedCenter,
+      center: selectedCenter.id,
       date: selectedDate,
-      specialty: selectedSpecialty,
+      specialty: selectedSpecialty.id,
     };
     console.log(newSearchParams);
     setSearchParams(newSearchParams);
@@ -68,8 +71,8 @@ export default function AppointmentSearch() {
           <input
             type="date"
             name="date"
+            value={selectedDate}
             className="form-control"
-            min={dateToday}
           />
         </div>
         <div className="mb-2">
@@ -83,6 +86,7 @@ export default function AppointmentSearch() {
           <CenterSelect
             availableCenters={availableCenters}
             setSelectedCenter={setSelectedCenter}
+            // value={selectedCenter.centerName}
           />
         </div>
         <div className="d-flex justify-content-between">
@@ -125,7 +129,7 @@ const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
   );
 };
 
-const CenterSelect = ({ availableCenters, setSelectedCenter }) => {
+const CenterSelect = ({ availableCenters, setSelectedCenter, value }) => {
   function changeHandler(event) {
     const selection = availableCenters.filter(
       (item) => item.centerName === event.target.value,
@@ -133,7 +137,7 @@ const CenterSelect = ({ availableCenters, setSelectedCenter }) => {
     return setSelectedCenter(selection[0]);
   }
   return (
-    <select onClick={changeHandler} className="form-control">
+    <select onClick={changeHandler} className="form-control" value={value}>
       <option>Todos</option>
       {availableCenters.map(function (item) {
         return item.enabled && <option key={item.id}>{item.centerName}</option>;

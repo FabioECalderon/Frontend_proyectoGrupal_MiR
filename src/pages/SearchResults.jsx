@@ -1,4 +1,4 @@
-import AppointmentSearch from '../components/AppointmentSearch';
+import AppointmentRefine from '../components/AppointmentRefine';
 import ResultCard from '../components/ResultCard';
 import ResultList from '../components/ResultList';
 
@@ -10,7 +10,7 @@ export default function SearchResults() {
           <div className="p-3 me-lg-5">
             <h1>Refina tu búsqueda</h1>
           </div>
-          <AppointmentSearch />
+          {/* <AppointmentRefine /> */}
         </div>
       </section>
       <section id="resultsSection">

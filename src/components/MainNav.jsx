@@ -38,7 +38,11 @@ export default function MainNav() {
               </NavLink>
               <NavDropdown
                 title={
-                  user ? <span> Hola {user.fullName} </span> : 'Zona de usuario'
+                  user ? (
+                    <span> Hola, {user.fullName} </span>
+                  ) : (
+                    'Zona de usuario'
+                  )
                 }
                 id="main-nav-dropdown"
               >
