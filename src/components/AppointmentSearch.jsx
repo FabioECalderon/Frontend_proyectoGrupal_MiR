@@ -1,24 +1,88 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { getSpecialties } from '../api/specialties';
+import { getCenters } from '../api/centers';
+import SearchContext from '../containers/SearchContext';
 
 export default function AppointmentSearch() {
+  const navigate = useNavigate();
+  const [availableSpecialties, setAvailableSpecialties] = useState([]);
+  const [availableCenters, setAvailableCenters] = useState([]);
+  const [selectedSpecialty, setSelectedSpecialty] = useState({ id: '' });
+  const [selectedCenter, setSelectedCenter] = useState({ id: '' });
+  const [error, setError] = useState('');
+  const { setSearchParams } = useContext(SearchContext);
+
+  async function loadSpecialties() {
+    try {
+      const response = await getSpecialties();
+      setAvailableSpecialties(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
+  async function loadCenters() {
+    try {
+      const response = await getCenters();
+      setAvailableCenters(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
+  let dateTemp = new Date(Date.now());
+  let dateToday = dateTemp.toISOString().slice(0, 10);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const selectedDate = event.target.date.value
+      ? event.target.date.value
+      : dateToday;
+    const newSearchParams = {
+      center: selectedCenter,
+      date: selectedDate,
+      specialty: selectedSpecialty,
+    };
+    console.log(newSearchParams);
+    setSearchParams(newSearchParams);
+    navigate('/searchResults');
+  }
+
+  useEffect(() => {
+    loadSpecialties();
+    loadCenters();
+  }, []);
+
   return (
     <div className="d-flex p-3 bg-white">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Especialidad</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Especialidad (ej. pediatría)"
+          <label className="form-label">Selecciona la especialidad</label>
+          <SpecialtySelect
+            name="specialty"
+            availableSpecialties={availableSpecialties}
+            setSelectedSpecialty={setSelectedSpecialty}
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Ubicación</label>
+          <label className="form-label">Selecciona la fecha</label>
           <input
-            type="text"
-            size="40ch"
+            type="date"
+            name="date"
             className="form-control"
-            placeholder="Ubicación (Centro médico)"
+            min={dateToday}
+          />
+        </div>
+        <div className="mb-2">
+          <label className="form-label">Selecciona la ciudad</label>
+          <select className="form-control">
+            <option className="form-control">Bogotá</option>
+          </select>
+        </div>
+        <div className="mb-2">
+          <label className="form-label">Selecciona el centro médico</label>
+          <CenterSelect
+            availableCenters={availableCenters}
+            setSelectedCenter={setSelectedCenter}
           />
         </div>
         <div className="d-flex justify-content-between">
@@ -26,17 +90,54 @@ export default function AppointmentSearch() {
             <input type="checkbox" className="form-check-input" />
             <label className="form-check-label ms-2">Consulta virtual</label>
           </div>
-
-          <NavLink to="/searchResults" className="nav-link">
-            <button
-              type="button"
-              className="btn btn-lg m-3 btn-primary text-white"
-            >
-              Buscar
-            </button>
-          </NavLink>
+          <button
+            type="submit"
+            className="btn btn-lg m-3 btn-primary text-white"
+          >
+            Buscar
+          </button>
         </div>
       </form>
     </div>
   );
 }
+
+const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
+  function changeHandler(event) {
+    const selection = availableSpecialties.filter(
+      (item) => item.name === event.target.value,
+    );
+    return setSelectedSpecialty(selection[0]);
+  }
+  return (
+    <select onClick={changeHandler} className="form-control">
+      <option>Todas</option>
+      {availableSpecialties.map(function (item) {
+        return (
+          item.enabled && (
+            <option key={item.id} value={item.name}>
+              {item.name}
+            </option>
+          )
+        );
+      })}
+    </select>
+  );
+};
+
+const CenterSelect = ({ availableCenters, setSelectedCenter }) => {
+  function changeHandler(event) {
+    const selection = availableCenters.filter(
+      (item) => item.centerName === event.target.value,
+    );
+    return setSelectedCenter(selection[0]);
+  }
+  return (
+    <select onClick={changeHandler} className="form-control">
+      <option>Todos</option>
+      {availableCenters.map(function (item) {
+        return item.enabled && <option key={item.id}>{item.centerName}</option>;
+      })}
+    </select>
+  );
+};
