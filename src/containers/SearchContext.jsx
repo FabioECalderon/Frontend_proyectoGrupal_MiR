@@ -13,9 +13,20 @@ const searchInitialValues = {
 
 export function SearchProvider({ children }) {
   const [searchParams, setSearchParams] = useState(searchInitialValues);
+  const [availableCenters, setAvailableCenters] = useState([]);
+  const [availableSpecialties, setAvailableSpecialties] = useState([]);
 
   return (
-    <SearchContext.Provider value={{ searchParams, setSearchParams }}>
+    <SearchContext.Provider
+      value={{
+        searchParams,
+        setSearchParams,
+        availableSpecialties,
+        setAvailableSpecialties,
+        availableCenters,
+        setAvailableCenters,
+      }}
+    >
       {children}
     </SearchContext.Provider>
   );

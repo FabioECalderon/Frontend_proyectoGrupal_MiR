@@ -1,38 +1,56 @@
-import AppointmentRefine from '../components/AppointmentRefine';
-import ResultCard from '../components/ResultCard';
+import { useContext, useEffect, useState } from 'react';
+
+import { getResults } from '../api/searchResults';
+
+// import AppointmentRefine from '../components/AppointmentRefine';
 import ResultList from '../components/ResultList';
+import SearchContext from '../containers/SearchContext';
 
 export default function SearchResults() {
+  const { searchParams } = useContext(SearchContext);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState();
+
+  const centerId = searchParams.center.id;
+  const specialtyId = searchParams.specialty.id;
+  console.log(centerId);
+  console.log(specialtyId);
+  console.log(error);
+
+  async function loadResults() {
+    try {
+      const response = await getResults({ centerId, specialtyId });
+      console.log(response);
+      setData(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  useEffect(() => {
+    loadResults();
+  }, []);
+
   return (
     <>
-      <section id="" className="d-flex justify-content-center">
+      {/* <section id="" className="d-flex justify-content-center">
         <div className="d-flex flex-wrap">
           <div className="p-3 me-lg-5">
-            <h1>Refina tu búsqueda</h1>
+            <h3>Refina tu búsqueda</h3>
           </div>
-          {/* <AppointmentRefine /> */}
+          <AppointmentRefine />
         </div>
-      </section>
+      </section> */}
       <section id="resultsSection">
         <div className="container-fluid">
           <div className="container text-center">
             <div className="row align-items-start">
               <div className="p-0 m-2 col border">
                 <div className="container px-4 text-center">
-                  <ResultCard />
-                  <ResultCard />
-                  <ResultCard />
-                  <ResultCard />
+                  <ResultList list={data} />
                 </div>
               </div>
-              <div className="col">
-                <img
-                  src="https://i0.wp.com/imgs.hipertextual.com/wp-content/uploads/2013/10/google-maps-new-interface.jpg?fit=950%2C534&quality=50&strip=all&ssl=1"
-                  className="img-fluid"
-                  alt="GoogleMaps API"
-                  width="300px"
-                />
-              </div>
+              <div className="col"></div>
             </div>
           </div>
         </div>

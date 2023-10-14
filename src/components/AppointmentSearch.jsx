@@ -6,12 +6,16 @@ import SearchContext from '../containers/SearchContext';
 
 export default function AppointmentSearch() {
   const navigate = useNavigate();
-  const [availableSpecialties, setAvailableSpecialties] = useState([]);
-  const [availableCenters, setAvailableCenters] = useState([]);
+  const {
+    setSearchParams,
+    availableSpecialties,
+    setAvailableSpecialties,
+    availableCenters,
+    setAvailableCenters,
+  } = useContext(SearchContext);
   const [selectedSpecialty, setSelectedSpecialty] = useState({ id: '' });
   const [selectedCenter, setSelectedCenter] = useState({ id: '' });
   const [error, setError] = useState('');
-  const { setSearchParams } = useContext(SearchContext);
 
   async function loadSpecialties() {
     try {
