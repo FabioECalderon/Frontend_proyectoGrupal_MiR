@@ -1,6 +1,9 @@
 import { useContext } from 'react';
 import SearchContext from '../containers/SearchContext';
 
+import RedirectionButton from './ButtonPay';
+import { Card, Row, Col, Button } from 'react-bootstrap';
+
 export default function DoctorCard({
   fullName = '',
   specialty = '',
@@ -17,58 +20,59 @@ export default function DoctorCard({
   const centerName = availableCenters.filter((item) => item.id === center)[0]
     .centerName;
 
-  return (
-    <div className="row gx-5">
-      <div className="p-1 col border">
-        <div className="p-1">
-          <div>
-            <img src="https://placehold.co/80x80" className="rounded-circle" />
+  const appointmentHours = [
+    '8:00',
+    '8:30',
+    '9:00',
+    '9:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+    '17:30',
+  ];
 
-            <h4>Dr {fullName}</h4>
-            <h5>{specialtyName}</h5>
-          </div>
-          <div>
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
-                  Ubicación
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Virtual
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <div>
-            <p>{centerName}</p>
-          </div>
-        </div>
-      </div>
-      <div className="col border container-fluid">
-        <div className="p-3">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">{searchParams.date}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <div>
-            <button type="button" className="btn btn-lg btn-light btn-sm">
-              Ver horarios disponibles
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+  return (
+    <Card style={{ width: '36rem' }}>
+      <Row className="p-2 d-flex">
+        <Col className="p-2 d-flex flex-column align-items-center">
+          <Card.Img
+            className="rounded-circle"
+            style={{ width: '10rem' }}
+            src={photo ? photo : 'https://placehold.co/80x80'}
+          />
+
+          <Card.Body className="p-1">
+            <Card.Title>Dr {fullName}</Card.Title>
+            <Card.Text className="fs-5">{specialtyName}</Card.Text>
+            <Card.Text className="fs-6">{centerName}</Card.Text>
+          </Card.Body>
+        </Col>
+        <Col>
+          <Card.Title className="d-flex justify-content-center gap-2 align-items-center fs-6">
+            <Button variant="secondary" className="text-white rounded-pill">
+              <i className="bi bi-caret-left-fill "></i>
+            </Button>{' '}
+            {searchParams.date}{' '}
+            <Button variant="secondary" className="text-white rounded-pill">
+              <i className="bi bi-caret-right-fill"></i>
+            </Button>
+          </Card.Title>
+          <Card.Body className="p-1 d-flex"></Card.Body>
+        </Col>
+      </Row>
+      <Card.Footer className="d-flex justify-content-center">
+        <Button variant="primary" className="text-white" disabled>
+          Seleccionar cita
+        </Button>
+      </Card.Footer>
+    </Card>
   );
 }

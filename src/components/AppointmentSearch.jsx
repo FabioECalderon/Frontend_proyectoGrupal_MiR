@@ -13,8 +13,14 @@ export default function AppointmentSearch() {
     availableCenters,
     setAvailableCenters,
   } = useContext(SearchContext);
-  const [selectedSpecialty, setSelectedSpecialty] = useState({ id: '' });
-  const [selectedCenter, setSelectedCenter] = useState({ id: '' });
+  const [selectedSpecialty, setSelectedSpecialty] = useState({
+    id: '',
+    name: 'Todas',
+  });
+  const [selectedCenter, setSelectedCenter] = useState({
+    id: '',
+    centerName: 'Todos',
+  });
   const [error, setError] = useState('');
 
   async function loadSpecialties() {
@@ -46,7 +52,7 @@ export default function AppointmentSearch() {
       date: selectedDate,
       specialty: selectedSpecialty,
     };
-    console.log(newSearchParams);
+    // console.log(newSearchParams);
     setSearchParams(newSearchParams);
     navigate('/searchResults');
   }
@@ -108,10 +114,14 @@ export default function AppointmentSearch() {
 
 const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
   function changeHandler(event) {
-    const selection = availableSpecialties.filter(
-      (item) => item.name === event.target.value,
-    );
-    return setSelectedSpecialty(selection[0]);
+    if (event.target.value === 'Todas') {
+      return setSelectedSpecialty({ id: '' });
+    } else {
+      const selection = availableSpecialties.filter(
+        (item) => item.name === event.target.value,
+      );
+      return setSelectedSpecialty(selection[0]);
+    }
   }
   return (
     <select onClick={changeHandler} className="form-control">
@@ -131,10 +141,14 @@ const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
 
 const CenterSelect = ({ availableCenters, setSelectedCenter }) => {
   function changeHandler(event) {
-    const selection = availableCenters.filter(
-      (item) => item.centerName === event.target.value,
-    );
-    return setSelectedCenter(selection[0]);
+    if (event.target.value === 'Todos') {
+      return setSelectedCenter({ id: '' });
+    } else {
+      const selection = availableCenters.filter(
+        (item) => item.centerName === event.target.value,
+      );
+      return setSelectedCenter(selection[0]);
+    }
   }
   return (
     <select onClick={changeHandler} className="form-control">

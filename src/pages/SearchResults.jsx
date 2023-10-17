@@ -5,6 +5,7 @@ import { getResults } from '../api/searchResults';
 // import AppointmentRefine from '../components/AppointmentRefine';
 import ResultList from '../components/ResultList';
 import SearchContext from '../containers/SearchContext';
+import { Col } from 'react-bootstrap';
 
 export default function SearchResults() {
   const { searchParams } = useContext(SearchContext);
@@ -13,9 +14,9 @@ export default function SearchResults() {
 
   const centerId = searchParams.center.id;
   const specialtyId = searchParams.specialty.id;
-  console.log(centerId);
-  console.log(specialtyId);
-  console.log(error);
+  // console.log(centerId);
+  // console.log(specialtyId);
+  console.log(searchParams);
 
   async function loadResults() {
     try {
@@ -41,19 +42,15 @@ export default function SearchResults() {
           <AppointmentRefine />
         </div>
       </section> */}
-      <section id="resultsSection">
-        <div className="container-fluid">
-          <div className="container text-center">
-            <div className="row align-items-start">
-              <div className="p-0 m-2 col border">
-                <div className="container px-4 text-center">
-                  <ResultList list={data} />
-                </div>
-              </div>
-              <div className="col"></div>
-            </div>
-          </div>
-        </div>
+
+      <section id="resultsSection" className=" bg-light">
+        <h4 className="px-5 pt-5">
+          {' '}
+          Mostrando los primeros 10 resultados para los criterios seleccionados
+        </h4>
+        <Col className="container-fluid d-flex flex-wrap gap-3 m-5">
+          <ResultList list={data} />
+        </Col>
       </section>
     </>
   );
