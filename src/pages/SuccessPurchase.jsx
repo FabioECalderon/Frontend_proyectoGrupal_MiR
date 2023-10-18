@@ -1,9 +1,18 @@
-import UserNav from "../components/UserNav";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import UserNav from '../components/UserNav';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { useContext, useEffect } from 'react';
+import UserContext from '../containers/UserContext';
+import { sendConfirmation } from '../api/sendemail';
 
 export default function SuccessPurchase() {
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    sendConfirmation(user.email);
+  }, []);
+
   return (
     <Container className="container-fluid">
       <Row>
