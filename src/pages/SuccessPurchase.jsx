@@ -2,15 +2,31 @@ import UserNav from '../components/UserNav';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useContext, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import UserContext from '../containers/UserContext';
 import { sendConfirmation } from '../api/sendemail';
+import {} from 'react';
 
 export default function SuccessPurchase() {
   const { user } = useContext(UserContext);
+  const [data, setData] = useState();
+  const [error, setError] = useState();
+
+  async function handleConfirmationEmail() {
+    try {
+      const response = await sendConfirmation(user.email);
+      setData(response);
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  console.log(data);
+  console.log(error);
+  console.log(user);
 
   useEffect(() => {
-    sendConfirmation(user.email);
+    handleConfirmationEmail();
   }, []);
 
   return (

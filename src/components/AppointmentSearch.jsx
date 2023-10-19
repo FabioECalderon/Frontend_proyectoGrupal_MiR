@@ -112,7 +112,10 @@ export default function AppointmentSearch() {
   );
 }
 
-const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
+const SpecialtySelect = ({
+  availableSpecialties = [],
+  setSelectedSpecialty,
+}) => {
   function changeHandler(event) {
     if (event.target.value === 'Todas') {
       return setSelectedSpecialty({ id: '' });
@@ -139,7 +142,7 @@ const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
   );
 };
 
-const CenterSelect = ({ availableCenters, setSelectedCenter }) => {
+const CenterSelect = ({ availableCenters = [], setSelectedCenter }) => {
   function changeHandler(event) {
     if (event.target.value === 'Todos') {
       return setSelectedCenter({ id: '' });

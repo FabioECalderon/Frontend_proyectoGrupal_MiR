@@ -72,14 +72,7 @@ export default function DoctorCard({
         </Col>
       </Row>
       <Card.Footer className="d-flex justify-content-center">
-        <Button variant="primary" className="text-white">
-
-          <Card.Body className="p-1 d-flex"></Card.Body>
-        </Col>
-      </Row>
-      <Card.Footer className="d-flex justify-content-center">
         <Button variant="primary" className="text-white" disabled>
-
           Seleccionar cita
         </Button>
       </Card.Footer>
