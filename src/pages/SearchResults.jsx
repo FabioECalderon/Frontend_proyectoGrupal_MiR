@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
-
 import { getResults } from '../api/searchResults';
 
 // import AppointmentRefine from '../components/AppointmentRefine';
 import ResultList from '../components/ResultList';
 import SearchContext from '../containers/SearchContext';
 import { Col } from 'react-bootstrap';
+import { getSpecialties } from '../api/specialties';
+import { getCenters } from '../api/centers';
 
 export default function SearchResults() {
-  const { searchParams } = useContext(SearchContext);
+  const { searchParams, setAvailableCenters, setAvailableSpecialties } =
+    useContext(SearchContext);
   const [data, setData] = useState([]);
   const [error, setError] = useState();
 
@@ -16,12 +18,29 @@ export default function SearchResults() {
   const specialtyId = searchParams.specialty.id;
   // console.log(centerId);
   // console.log(specialtyId);
-  console.log(searchParams);
+  // console.log(searchParams);
+
+  async function loadSpecialties() {
+    try {
+      const response = await getSpecialties();
+      setAvailableSpecialties(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
+  async function loadCenters() {
+    try {
+      const response = await getCenters();
+      setAvailableCenters(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
 
   async function loadResults() {
     try {
       const response = await getResults({ centerId, specialtyId });
-      console.log(response);
+      // console.log(response);
       setData(response.data);
     } catch (error) {
       setError(error);
@@ -29,6 +48,8 @@ export default function SearchResults() {
   }
 
   useEffect(() => {
+    loadSpecialties();
+    loadCenters();
     loadResults();
   }, []);
 

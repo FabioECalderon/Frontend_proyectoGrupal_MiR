@@ -6,8 +6,8 @@ export default function ResultList({ list = [] }) {
       <DoctorCard
         key={item.id}
         fullName={item.fullName}
-        specialty={item.specialtyId}
-        center={item.centerId}
+        specialtyId={item.specialtyId}
+        centerId={item.centerId}
         photo={item.photo}
       />
     );
