@@ -1,22 +1,27 @@
 import { useContext, useEffect, useState } from 'react';
 import SearchContext from '../containers/SearchContext';
 
-import RedirectionButton from './ButtonPay';
+// import RedirectionButton from './ButtonPay';
 import { Card, Row, Col, Button, Container } from 'react-bootstrap';
 import AppointmentList from './AppointmentList';
 
 export default function DoctorCard({
+  // eslint-disable-next-line react/prop-types
   fullName = '',
+  // eslint-disable-next-line react/prop-types
   specialtyId = '',
+  // eslint-disable-next-line react/prop-types
   centerId = '',
+  // eslint-disable-next-line react/prop-types
   photo = '',
+  // eslint-disable-next-line react/prop-types
+  key = '',
 }) {
   const { searchParams, availableCenters, availableSpecialties } =
     useContext(SearchContext);
   const [specialtyName, setSpecialtyName] = useState('');
   const [centerName, setCenterName] = useState('');
   const [showHours, setShowHours] = useState(false);
-  // const [hourSelected, setHourSelected] = useState(false);
 
   async function loadData() {
     setSpecialtyName(
@@ -69,7 +74,7 @@ export default function DoctorCard({
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">
             {showHours ? (
               <Container className="d-flex flex gap-1 flex-wrap justify-content-center align-items-center">
-                <AppointmentList />
+                <AppointmentList doctor={key} />
               </Container>
             ) : (
               <Button

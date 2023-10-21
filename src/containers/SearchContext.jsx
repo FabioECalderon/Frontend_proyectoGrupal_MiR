@@ -10,35 +10,14 @@ const searchInitialValues = {
   center: { id: '', centerName: 'Todos' },
   date: dateToday,
   specialty: { id: '', name: 'Todas' },
+  time: '0:00',
 };
 
+// eslint-disable-next-line react/prop-types
 export function SearchProvider({ children }) {
-  const [searchParams, setSearchParams] = useState(searchInitialValues);
   const [availableCenters, setAvailableCenters] = useState([]);
   const [availableSpecialties, setAvailableSpecialties] = useState([]);
-
-  // //Mounted searchParams
-  useEffect(() => {
-    const json = localStorage.getItem('searchParams');
-    if (json) {
-      try {
-        const data = JSON.parse(json);
-        setSearchParams(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }, []);
-
-  //Updated searchParams
-  useEffect(() => {
-    if (searchParams === null) {
-      localStorage.removeItem('searchParams');
-    }
-    if (searchParams !== undefined) {
-      localStorage.setItem('searchParams', JSON.stringify(searchParams));
-    }
-  }, [searchParams]);
+  const [searchParams, setSearchParams] = useState(searchInitialValues);
 
   //Mounted centers
   useEffect(() => {
@@ -85,6 +64,29 @@ export function SearchProvider({ children }) {
       localStorage.setItem('specialties', JSON.stringify(availableSpecialties));
     }
   }, [availableSpecialties]);
+
+  // //Mounted searchParams
+  useEffect(() => {
+    const json = localStorage.getItem('searchParams');
+    if (json) {
+      try {
+        const data = JSON.parse(json);
+        setSearchParams(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, []);
+
+  //Updated searchParams
+  useEffect(() => {
+    if (searchParams === null) {
+      localStorage.removeItem('searchParams');
+    }
+    if (searchParams !== undefined) {
+      localStorage.setItem('searchParams', JSON.stringify(searchParams));
+    }
+  }, [searchParams]);
 
   return (
     <SearchContext.Provider

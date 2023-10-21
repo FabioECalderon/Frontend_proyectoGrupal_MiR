@@ -51,6 +51,7 @@ export default function AppointmentSearch() {
       center: selectedCenter,
       date: selectedDate,
       specialty: selectedSpecialty,
+      time: '0:00',
     };
     // console.log(newSearchParams);
     setSearchParams(newSearchParams);

@@ -14,12 +14,6 @@ export default function SearchResults() {
   const [data, setData] = useState([]);
   const [error, setError] = useState();
 
-  const centerId = searchParams.center.id;
-  const specialtyId = searchParams.specialty.id;
-  // console.log(centerId);
-  // console.log(specialtyId);
-  // console.log(searchParams);
-
   async function loadSpecialties() {
     try {
       const response = await getSpecialties();
@@ -38,9 +32,10 @@ export default function SearchResults() {
   }
 
   async function loadResults() {
+    const centerId = searchParams.center.id;
+    const specialtyId = searchParams.specialty.id;
     try {
       const response = await getResults({ centerId, specialtyId });
-      // console.log(response);
       setData(response.data);
     } catch (error) {
       setError(error);
@@ -69,7 +64,7 @@ export default function SearchResults() {
           {' '}
           Mostrando los primeros 10 resultados para los criterios seleccionados
         </h4>
-        <Col className="container-fluid d-flex flex-wrap gap-3 m-5">
+        <Col className="container-fluid d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <ResultList list={data} />
         </Col>
       </section>
