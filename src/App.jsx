@@ -1,26 +1,26 @@
-import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { UserProvider } from "./containers/UserContext";
-import ProtectedRoute from "./containers/ProtectedRoute";
+import { Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { UserProvider } from './containers/UserContext';
+import ProtectedRoute from './containers/ProtectedRoute';
 
-import MainNav from "./components/MainNav";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Faqs from "./pages/Faqs";
-import Admin from "./pages/Admin";
-import LogIn from "./pages/LogIn";
-import SearchResults from "./pages/SearchResults";
-import AdminCenters from "./pages/AdminCenters";
-import AdminSpecialties from "./pages/AdminSpecialties";
-import AdminMedics from "./pages/AdminMedics";
-import AdminUsers from "./pages/AdminUsers";
-import PasswordRestore from "./pages/PasswordRestore";
-import User from "./pages/User";
-import UserConfiguration from "./pages/UserConfiguration";
-import SavedSpecilists from "./pages/SavedSpecilists";
-import Appointments from "./pages/Appointments";
-import { SearchProvider } from "./containers/SearchContext";
-import SuccessPurchase from "./pages/SuccessPurchase";
+import MainNav from './components/MainNav';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Faqs from './pages/Faqs';
+import Admin from './pages/Admin';
+import LogIn from './pages/LogIn';
+import SearchResults from './pages/SearchResults';
+import AdminCenters from './pages/AdminCenters';
+import AdminSpecialties from './pages/AdminSpecialties';
+import AdminMedics from './pages/AdminMedics';
+import AdminUsers from './pages/AdminUsers';
+import PasswordRestore from './pages/PasswordRestore';
+import User from './pages/User';
+import UserConfiguration from './pages/UserConfiguration';
+import SavedSpecilists from './pages/SavedSpecilists';
+import Appointments from './pages/Appointments';
+import { SearchProvider } from './containers/SearchContext';
+import SuccessPurchase from './pages/SuccessPurchase';
 
 function App() {
   return (

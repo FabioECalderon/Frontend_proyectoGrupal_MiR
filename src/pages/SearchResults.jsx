@@ -1,27 +1,41 @@
 import { useContext, useEffect, useState } from 'react';
-
 import { getResults } from '../api/searchResults';
 
 // import AppointmentRefine from '../components/AppointmentRefine';
 import ResultList from '../components/ResultList';
 import SearchContext from '../containers/SearchContext';
 import { Col } from 'react-bootstrap';
+import { getSpecialties } from '../api/specialties';
+import { getCenters } from '../api/centers';
 
 export default function SearchResults() {
-  const { searchParams } = useContext(SearchContext);
+  const { searchParams, setAvailableCenters, setAvailableSpecialties } =
+    useContext(SearchContext);
   const [data, setData] = useState([]);
   const [error, setError] = useState();
 
-  const centerId = searchParams.center.id;
-  const specialtyId = searchParams.specialty.id;
-  // console.log(centerId);
-  // console.log(specialtyId);
-  console.log(searchParams);
+  async function loadSpecialties() {
+    try {
+      const response = await getSpecialties();
+      setAvailableSpecialties(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
+  async function loadCenters() {
+    try {
+      const response = await getCenters();
+      setAvailableCenters(response.data);
+    } catch (error) {
+      setError(error);
+    }
+  }
 
   async function loadResults() {
+    const centerId = searchParams.center.id;
+    const specialtyId = searchParams.specialty.id;
     try {
       const response = await getResults({ centerId, specialtyId });
-      console.log(response);
       setData(response.data);
     } catch (error) {
       setError(error);
@@ -29,6 +43,8 @@ export default function SearchResults() {
   }
 
   useEffect(() => {
+    loadSpecialties();
+    loadCenters();
     loadResults();
   }, []);
 
@@ -48,7 +64,7 @@ export default function SearchResults() {
           {' '}
           Mostrando los primeros 10 resultados para los criterios seleccionados
         </h4>
-        <Col className="container-fluid d-flex flex-wrap gap-3 m-5">
+        <Col className="container-fluid d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <ResultList list={data} />
         </Col>
       </section>
