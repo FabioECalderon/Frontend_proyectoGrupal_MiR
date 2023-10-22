@@ -21,6 +21,7 @@ import SavedSpecilists from './pages/SavedSpecilists';
 import Appointments from './pages/Appointments';
 import { SearchProvider } from './containers/SearchContext';
 import SuccessPurchase from './pages/SuccessPurchase';
+import ConfirmAppointment from './pages/ConfirmAppointment';
 
 function App() {
   return (
@@ -45,6 +46,19 @@ function App() {
               </SearchProvider>
             }
           />
+          <Route
+            path="/confirmAppointment"
+            element={
+              <SearchProvider>
+                <ConfirmAppointment />
+              </SearchProvider>
+            }
+          />
+          <Route
+            path="/api/mercadopago/successpurchase"
+            element={<SuccessPurchase />}
+          />
+
           <Route path="/login" element={<LogIn />} />
           <Route path="/restore" element={<PasswordRestore />} />
 
@@ -90,10 +104,6 @@ function App() {
               }
             />
           </Route>
-          <Route
-            path="/api/mercadopago/successpurchase"
-            element={<SuccessPurchase />}
-          />
           <Route path="/admin">
             <Route
               index
