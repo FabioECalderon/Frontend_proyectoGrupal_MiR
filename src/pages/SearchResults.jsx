@@ -64,7 +64,7 @@ export default function SearchResults() {
           {' '}
           Mostrando los primeros 10 resultados para los criterios seleccionados
         </h4>
-        <Col className="container-fluid d-flex flex-wrap gap-3 justify-content-center align-items-center">
+        <Col className="pb-5 container-fluid d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <ResultList list={data} />
         </Col>
       </section>
