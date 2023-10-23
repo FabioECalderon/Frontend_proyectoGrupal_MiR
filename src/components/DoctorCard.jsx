@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SearchContext from '../containers/SearchContext';
 
-// import RedirectionButton from './ButtonPay';
 import { Card, Row, Col, Button, Container } from 'react-bootstrap';
 import AppointmentList from './AppointmentList';
+import { getLocation } from '../api/locations';
 
 export default function DoctorCard(doctor) {
   const { searchParams, availableCenters, availableSpecialties } =
     useContext(SearchContext);
+  const [selectedAppointment, setSelectedAppointment] = useState({ ...doctor });
   const [showHours, setShowHours] = useState(false);
+  const [error, setError] = useState(null);
 
   const { fullName = '', specialtyId = '', centerId = '', photo = '' } = doctor;
 
@@ -18,20 +20,28 @@ export default function DoctorCard(doctor) {
   )[0];
   const cent = availableCenters.filter((item) => item.id === centerId)[0];
 
-  doctor = {
-    ...doctor,
-    specialty: spec.name,
-    center: cent.centerName,
-  };
-  console.log(doctor);
+  async function loadAddress(id) {
+    try {
+      const response = await getLocation(id);
+      setSelectedAppointment({
+        ...selectedAppointment,
+        specialty: spec.name,
+        center: cent.centerName,
+        address: response.data.address,
+        city: response.data.city,
+      });
+    } catch (error) {
+      setError(error);
+    }
+  }
 
   function toggleShow() {
     setShowHours(true);
   }
 
-  // useEffect(() => {
-  //   loadData();
-  // }, []);
+  useEffect(() => {
+    loadAddress(cent.locationId);
+  }, []);
 
   return (
     <Card>
@@ -48,10 +58,16 @@ export default function DoctorCard(doctor) {
 
           <Card.Body className="p-1">
             <Card.Title>Dr {fullName}</Card.Title>
-            <Card.Text className="fs-5">{doctor.specialty}</Card.Text>
-            <Card.Text className="fs-6">{doctor.center}</Card.Text>
-            {/* TODO Center Address */}
-            <Card.Text className="fs-6"></Card.Text>
+            <Card.Text className="fs-5">
+              {selectedAppointment.specialty}
+            </Card.Text>
+            <Card.Text className="p-0 m-0 fs-6">
+              {selectedAppointment.center}
+            </Card.Text>
+            <Card.Text className="p-0 fs-6">
+              {selectedAppointment.city ?? null} -{' '}
+              {selectedAppointment.address ?? null}
+            </Card.Text>
           </Card.Body>
         </Col>
         <Col style={{ width: '16rem' }}>
@@ -82,14 +98,6 @@ export default function DoctorCard(doctor) {
           </Card.Body>
         </Col>
       </Row>
-      {/* <Card.Footer className="d-flex justify-content-center">
-        <Button
-          variant="primary"
-          className={hourSelected ? 'text-white' : 'text-white disabled'}
-        >
-          Seleccionar cita
-        </Button>
-      </Card.Footer> */}
     </Card>
   );
 }
