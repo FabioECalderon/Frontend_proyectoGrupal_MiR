@@ -7,13 +7,12 @@ import AppointmentList from './AppointmentList';
 import { getLocation } from '../api/locations';
 
 export default function DoctorCard(doctor) {
+  const { fullName = '', specialtyId = '', centerId = '', photo = '' } = doctor;
   const { searchParams, availableCenters, availableSpecialties } =
     useContext(SearchContext);
-  const [selectedAppointment, setSelectedAppointment] = useState({ ...doctor });
+  const [selectedInfo, setSelectedInfo] = useState({ ...doctor });
   const [showHours, setShowHours] = useState(false);
   const [error, setError] = useState(null);
-
-  const { fullName = '', specialtyId = '', centerId = '', photo = '' } = doctor;
 
   const spec = availableSpecialties.filter(
     (item) => item.id === specialtyId,
@@ -23,12 +22,13 @@ export default function DoctorCard(doctor) {
   async function loadAddress(id) {
     try {
       const response = await getLocation(id);
-      setSelectedAppointment({
-        ...selectedAppointment,
+      setSelectedInfo({
+        ...selectedInfo,
         specialty: spec.name,
         center: cent.centerName,
         address: response.data.address,
         city: response.data.city,
+        date: searchParams.date,
       });
     } catch (error) {
       setError(error);
@@ -58,15 +58,12 @@ export default function DoctorCard(doctor) {
 
           <Card.Body className="p-1">
             <Card.Title>Dr {fullName}</Card.Title>
-            <Card.Text className="fs-5">
-              {selectedAppointment.specialty}
-            </Card.Text>
+            <Card.Text className="fs-5">{selectedInfo.specialty}</Card.Text>
             <Card.Text className="p-0 m-0 fs-6">
-              {selectedAppointment.center}
+              {selectedInfo.center}
             </Card.Text>
             <Card.Text className="p-0 fs-6">
-              {selectedAppointment.city ?? null} -{' '}
-              {selectedAppointment.address ?? null}
+              {selectedInfo.city ?? null} - {selectedInfo.address ?? null}
             </Card.Text>
           </Card.Body>
         </Col>
@@ -84,7 +81,7 @@ export default function DoctorCard(doctor) {
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">
             {showHours ? (
               <Container className="d-flex flex gap-1 flex-wrap justify-content-center align-items-center">
-                <AppointmentList />
+                <AppointmentList selectedInfo={selectedInfo} />
               </Container>
             ) : (
               <Button

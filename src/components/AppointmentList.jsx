@@ -1,9 +1,12 @@
 import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import SearchContext from '../containers/SearchContext';
+import { useNavigate } from 'react-router-dom';
 
-export default function AppointmentList(key = '') {
-  const { searchParams, setSearchParams } = useContext(SearchContext);
+export default function AppointmentList({ selectedInfo }) {
+  const { selectedAppointment, setSelectedAppointment } =
+    useContext(SearchContext);
+  const navigate = useNavigate();
   const appointmentHours = [
     '8:00',
     '8:30',
@@ -22,20 +25,15 @@ export default function AppointmentList(key = '') {
     '17:00',
     '17:30',
   ];
-
-  async function handleSubmit(event) {
-    const data = {
-      center: searchParams.center,
-      date: searchParams.date,
-      specialty: searchParams.specialty,
-      doctorId: key,
-      time: event.target.name,
-    };
-    // data.time = event.target.name;
-    await setSearchParams(data);
+  // TODO: INVALIDATE PREVIOUSLY RESERVED APPOINTMENTS
+  function handleSubmit(event) {
+    setSelectedAppointment({ ...selectedInfo, time: event.target.name });
+    const selectedData = { ...selectedInfo, time: event.target.name };
+    localStorage.setItem('centers', JSON.stringify(selectedData));
     console.log(event);
-    console.log('data', data);
-    console.log('searchParams', searchParams);
+    console.log('data', selectedData);
+    console.log('data_state', selectedAppointment);
+    navigate('/confirmAppointment');
   }
 
   return appointmentHours.map(function (item, index) {

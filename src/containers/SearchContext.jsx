@@ -18,6 +18,7 @@ export function SearchProvider({ children }) {
   const [availableCenters, setAvailableCenters] = useState([]);
   const [availableSpecialties, setAvailableSpecialties] = useState([]);
   const [searchParams, setSearchParams] = useState(searchInitialValues);
+  const [selectedAppointment, setSelectedAppointment] = useState({});
 
   //Mounted centers
   useEffect(() => {
@@ -97,6 +98,8 @@ export function SearchProvider({ children }) {
         setAvailableSpecialties,
         availableCenters,
         setAvailableCenters,
+        selectedAppointment,
+        setSelectedAppointment,
       }}
     >
       {children}
