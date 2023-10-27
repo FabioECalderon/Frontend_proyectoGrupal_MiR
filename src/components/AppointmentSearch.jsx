@@ -1,9 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
-import { getSpecialties } from '../api/specialties';
-import { getCenters } from '../api/centers';
-import SearchContext from '../containers/SearchContext';
 
 export default function AppointmentSearch() {
   const navigate = useNavigate();
