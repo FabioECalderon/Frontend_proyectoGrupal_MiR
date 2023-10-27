@@ -1,14 +1,22 @@
-import RedirectionButton from "../components/ButtonPay";
+import { Col, Container, Row } from 'react-bootstrap';
+import UserNav from '../components/UserNav';
 
 export default function Appointments() {
   return (
     <>
-      <div className="d-flex justify-content-center m-4">
-        <h1>  Citas</h1>
-      </div>
-      <div className="d-flex justify-content-center">
-        <RedirectionButton></RedirectionButton>
-      </div>
+      <Container className="container-fluid">
+        <Row>
+          <Col>
+            <UserNav />
+          </Col>
+          <Col lg={9} className="border-start">
+            <h4 className="py-3 text-center" id="top">
+              PANEL DE USUARIO
+            </h4>
+            <h5> Citas</h5>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }

@@ -82,7 +82,8 @@ export default function Home() {
             </ul>
           </div>
           <div className="px-md-5">
-            <img src="/assets/faqs.png" alt="Faqs" />
+            */ TODO Replace faqs image/*
+            <img src="" alt="Faqs" />
           </div>
         </div>
       </section>

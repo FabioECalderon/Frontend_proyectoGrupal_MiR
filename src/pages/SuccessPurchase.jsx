@@ -42,7 +42,7 @@ export default function SuccessPurchase() {
           <Row>
             <Col className="border-top">
               <h5 className="py-3">Notificaciones</h5>
-              <h1 className="py-3">Tu cita fue pagada con exito </h1>
+              <h4 className="py-3">Tu cita fue pagada con exito </h4>
             </Col>
           </Row>
         </Col>
