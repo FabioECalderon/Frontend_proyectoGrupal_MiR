@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { getSpecialties } from '../api/specialties';
@@ -8,6 +9,7 @@ export default function AppointmentSearch() {
   const navigate = useNavigate();
   const {
     setSearchParams,
+    searchParams,
     availableSpecialties,
     setAvailableSpecialties,
     availableCenters,
@@ -21,6 +23,7 @@ export default function AppointmentSearch() {
     id: '',
     centerName: 'Todos',
   });
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState('');
 
   async function loadSpecialties() {
@@ -47,14 +50,12 @@ export default function AppointmentSearch() {
     const selectedDate = event.target.date.value
       ? event.target.date.value
       : dateToday;
-    const newSearchParams = {
+    setSearchParams({
+      ...searchParams,
       center: selectedCenter,
       date: selectedDate,
       specialty: selectedSpecialty,
-      time: '0:00',
-    };
-    // console.log(newSearchParams);
-    setSearchParams(newSearchParams);
+    });
     navigate('/searchResults');
   }
 

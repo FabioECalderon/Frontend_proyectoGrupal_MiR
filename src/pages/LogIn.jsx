@@ -44,7 +44,7 @@ export default function LogIn() {
 
                 setUser(data);
                 setSubmitting(false);
-                navigate('/home');
+                navigate(-1);
               } catch (e) {
                 const message = formatError(e);
                 setError(message);

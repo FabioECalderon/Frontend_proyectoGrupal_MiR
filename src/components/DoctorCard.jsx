@@ -1,35 +1,38 @@
+/* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from 'react';
 import SearchContext from '../containers/SearchContext';
 
-// import RedirectionButton from './ButtonPay';
 import { Card, Row, Col, Button, Container } from 'react-bootstrap';
 import AppointmentList from './AppointmentList';
+import { getLocation } from '../api/locations';
 
-export default function DoctorCard({
-  // eslint-disable-next-line react/prop-types
-  fullName = '',
-  // eslint-disable-next-line react/prop-types
-  specialtyId = '',
-  // eslint-disable-next-line react/prop-types
-  centerId = '',
-  // eslint-disable-next-line react/prop-types
-  photo = '',
-  // eslint-disable-next-line react/prop-types
-  key = '',
-}) {
+export default function DoctorCard(doctor) {
+  const { fullName = '', specialtyId = '', centerId = '', photo = '' } = doctor;
   const { searchParams, availableCenters, availableSpecialties } =
     useContext(SearchContext);
-  const [specialtyName, setSpecialtyName] = useState('');
-  const [centerName, setCenterName] = useState('');
+  const [selectedInfo, setSelectedInfo] = useState({ ...doctor });
   const [showHours, setShowHours] = useState(false);
+  const [error, setError] = useState(null);
 
-  async function loadData() {
-    setSpecialtyName(
-      availableSpecialties.filter((item) => item.id === specialtyId)[0].name,
-    );
-    setCenterName(
-      availableCenters.filter((item) => item.id === centerId)[0].centerName,
-    );
+  const spec = availableSpecialties.filter(
+    (item) => item.id === specialtyId,
+  )[0];
+  const cent = availableCenters.filter((item) => item.id === centerId)[0];
+
+  async function loadAddress(id) {
+    try {
+      const response = await getLocation(id);
+      setSelectedInfo({
+        ...selectedInfo,
+        specialty: spec.name,
+        center: cent.centerName,
+        address: response.data.address,
+        city: response.data.city,
+        date: searchParams.date,
+      });
+    } catch (error) {
+      setError(error);
+    }
   }
 
   function toggleShow() {
@@ -37,7 +40,7 @@ export default function DoctorCard({
   }
 
   useEffect(() => {
-    loadData();
+    loadAddress(cent.locationId);
   }, []);
 
   return (
@@ -55,9 +58,13 @@ export default function DoctorCard({
 
           <Card.Body className="p-1">
             <Card.Title>Dr {fullName}</Card.Title>
-            <Card.Text className="fs-5">{specialtyName}</Card.Text>
-            <Card.Text className="fs-6">{centerName}</Card.Text>
-            <Card.Text className="fs-6">*TODO Center Address</Card.Text>
+            <Card.Text className="fs-5">{selectedInfo.specialty}</Card.Text>
+            <Card.Text className="p-0 m-0 fs-6">
+              {selectedInfo.center}
+            </Card.Text>
+            <Card.Text className="p-0 fs-6">
+              {selectedInfo.city ?? null} - {selectedInfo.address ?? null}
+            </Card.Text>
           </Card.Body>
         </Col>
         <Col style={{ width: '16rem' }}>
@@ -74,7 +81,7 @@ export default function DoctorCard({
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">
             {showHours ? (
               <Container className="d-flex flex gap-1 flex-wrap justify-content-center align-items-center">
-                <AppointmentList doctor={key} />
+                <AppointmentList selectedInfo={selectedInfo} />
               </Container>
             ) : (
               <Button
@@ -85,18 +92,9 @@ export default function DoctorCard({
                 Ver horarios disponibles
               </Button>
             )}
-            {/* <RedirectionButton /> */}
           </Card.Body>
         </Col>
       </Row>
-      {/* <Card.Footer className="d-flex justify-content-center">
-        <Button
-          variant="primary"
-          className={hourSelected ? 'text-white' : 'text-white disabled'}
-        >
-          Seleccionar cita
-        </Button>
-      </Card.Footer> */}
     </Card>
   );
 }
