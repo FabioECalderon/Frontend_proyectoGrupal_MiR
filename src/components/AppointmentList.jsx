@@ -1,11 +1,11 @@
-import { useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import SearchContext from '../containers/SearchContext';
+// import { useContext } from 'react';
+// import SearchContext from '../containers/SearchContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function AppointmentList({ selectedInfo }) {
-  const { selectedAppointment, setSelectedAppointment } =
-    useContext(SearchContext);
+  // const { selectedAppointment, setSelectedAppointment } =
+  //   useContext(SearchContext);
   const navigate = useNavigate();
   const appointmentHours = [
     '8:00',
@@ -27,12 +27,12 @@ export default function AppointmentList({ selectedInfo }) {
   ];
   // TODO: INVALIDATE PREVIOUSLY RESERVED APPOINTMENTS
   function handleSubmit(event) {
-    setSelectedAppointment({ ...selectedInfo, time: event.target.name });
+    // setSelectedAppointment({ ...selectedInfo, time: event.target.name });
     const selectedData = { ...selectedInfo, time: event.target.name };
-    localStorage.setItem('centers', JSON.stringify(selectedData));
-    console.log(event);
-    console.log('data', selectedData);
-    console.log('data_state', selectedAppointment);
+    localStorage.setItem('appointmentData', JSON.stringify(selectedData));
+    // console.log(event);
+    // console.log('data', selectedData);
+    // console.log('data_state', selectedAppointment);
     navigate('/confirmAppointment');
   }
 

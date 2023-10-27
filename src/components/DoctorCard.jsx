@@ -12,6 +12,7 @@ export default function DoctorCard(doctor) {
     useContext(SearchContext);
   const [selectedInfo, setSelectedInfo] = useState({ ...doctor });
   const [showHours, setShowHours] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
 
   const spec = availableSpecialties.filter(

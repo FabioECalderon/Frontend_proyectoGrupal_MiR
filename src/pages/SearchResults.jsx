@@ -12,6 +12,7 @@ export default function SearchResults() {
   const { searchParams, setAvailableCenters, setAvailableSpecialties } =
     useContext(SearchContext);
   const [data, setData] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState();
 
   async function loadSpecialties() {
