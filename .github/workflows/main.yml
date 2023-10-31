@@ -1,4 +1,4 @@
-name: Linters
+name: Cypress
 
 on:
   push:
@@ -11,6 +11,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CI: true # Set the CI environment variable
+
 
     steps:
       - uses: actions/checkout@v3
