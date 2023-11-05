@@ -6,5 +6,6 @@ export const UserOutput = z
     email: z.string(),
     createdAt: z.string(),
     userType: z.string(),
+    id: z.string(),
   })
   .strict();

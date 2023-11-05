@@ -42,14 +42,14 @@ export default function AppointmentSearch() {
       setError(error);
     }
   }
-  let dateTemp = new Date(Date.now());
-  let dateToday = dateTemp.toISOString().slice(0, 10);
+  let dateTemp = new Date(Date.now() + 86400000);
+  let dateTomorrow = dateTemp.toISOString().slice(0, 10);
 
   function handleSubmit(event) {
     event.preventDefault();
     const selectedDate = event.target.date.value
       ? event.target.date.value
-      : dateToday;
+      : dateTomorrow;
     setSearchParams({
       ...searchParams,
       center: selectedCenter,
@@ -81,7 +81,7 @@ export default function AppointmentSearch() {
             type="date"
             name="date"
             className="form-control"
-            min={dateToday}
+            min={dateTomorrow}
           />
         </div>
         <div className="mb-2">

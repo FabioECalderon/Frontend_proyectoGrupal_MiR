@@ -34,7 +34,7 @@ export async function getAppointment(id) {
 
 export async function createAppointment(payload) {
   try {
-    const response = await http.post('/v1/appointments/', payload);
+    const { data: response } = await http.post('/v1/appointments/', payload);
 
     const data = transformAppointment(response.data);
     return {

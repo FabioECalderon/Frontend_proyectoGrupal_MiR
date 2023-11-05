@@ -8,10 +8,10 @@ export default function AppointmentList({ selectedInfo }) {
   //   useContext(SearchContext);
   const navigate = useNavigate();
   const appointmentHours = [
-    '8:00',
-    '8:30',
-    '9:00',
-    '9:30',
+    '08:00',
+    '08:30',
+    '09:00',
+    '09:30',
     '10:00',
     '10:30',
     '11:00',
