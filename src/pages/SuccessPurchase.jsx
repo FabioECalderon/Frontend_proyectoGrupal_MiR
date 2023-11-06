@@ -27,6 +27,7 @@ export default function SuccessPurchase() {
 
   useEffect(() => {
     handleConfirmationEmail();
+    // handleConfirmAppointmentStatus();
   }, []);
 
   return (

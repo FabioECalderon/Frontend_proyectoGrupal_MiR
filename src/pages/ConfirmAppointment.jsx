@@ -22,8 +22,10 @@ export default function ConfirmAppointment() {
       };
       payload.centerId = selectedData.centerId;
       payload.doctorId = selectedData.id;
-      // payload.userId = user.id;
-      // payload.appointmentDate= Date.parse;()
+      payload.userId = user.id;
+      const fullDate = `${selectedData.date}T${selectedData.time}:00.000Z`;
+      payload.appointmentDate = fullDate;
+      // console.log(payload);
 
       const response = await createAppointment(payload);
       // eslint-disable-next-line no-unused-vars

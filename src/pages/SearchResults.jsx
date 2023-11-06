@@ -51,7 +51,7 @@ export default function SearchResults() {
 
   return (
     <>
-      {/* <section id="" className="d-flex justify-content-center">
+      {/* <section className="d-flex justify-content-center">
         <div className="d-flex flex-wrap">
           <div className="p-3 me-lg-5">
             <h3>Refina tu búsqueda</h3>

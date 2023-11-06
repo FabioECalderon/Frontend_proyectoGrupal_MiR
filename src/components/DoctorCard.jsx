@@ -15,6 +15,9 @@ export default function DoctorCard(doctor) {
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
 
+  let dateTemp = new Date(Date.now() + 86400000);
+  let dateTomorrow = dateTemp.toISOString().slice(0, 10);
+
   const spec = availableSpecialties.filter(
     (item) => item.id === specialtyId,
   )[0];
@@ -40,6 +43,11 @@ export default function DoctorCard(doctor) {
     setShowHours(true);
   }
 
+  function toggleNoShow() {
+    setShowHours(false);
+    searchParams.date = event.target.value;
+  }
+
   useEffect(() => {
     loadAddress(cent.locationId);
   }, []);
@@ -49,7 +57,7 @@ export default function DoctorCard(doctor) {
       <Row className="p-2 d-flex flex-wrap">
         <Col
           style={{ width: '20rem' }}
-          className="p-2 d-flex flex-column align-items-center"
+          className="p-2 py-3 d-flex flex-column align-items-center"
         >
           <Card.Img
             className="rounded-circle"
@@ -57,7 +65,7 @@ export default function DoctorCard(doctor) {
             src={photo ? photo : 'https://placehold.co/80x80'}
           />
 
-          <Card.Body className="p-1">
+          <Card.Body className="p-1 py-2">
             <Card.Title>Dr {fullName}</Card.Title>
             <Card.Text className="fs-5">{selectedInfo.specialty}</Card.Text>
             <Card.Text className="p-0 m-0 fs-6">
@@ -70,13 +78,13 @@ export default function DoctorCard(doctor) {
         </Col>
         <Col style={{ width: '16rem' }}>
           <Card.Title className="d-flex justify-content-center gap-2 align-items-center fs-6">
-            <Button variant="secondary" className="text-white rounded-pill">
+            {/* <Button variant="secondary" className="text-white rounded-pill">
               <i className="bi bi-caret-left-fill "></i>
-            </Button>{' '}
-            {searchParams.date}{' '}
-            <Button variant="secondary" className="text-white rounded-pill">
+            </Button> */}
+            {searchParams.date}
+            {/* <Button variant="secondary" className="text-white rounded-pill">
               <i className="bi bi-caret-right-fill"></i>
-            </Button>
+            </Button> */}
           </Card.Title>
 
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">
