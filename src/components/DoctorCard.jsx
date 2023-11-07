@@ -5,6 +5,7 @@ import SearchContext from '../containers/SearchContext';
 import { Card, Row, Col, Button, Container } from 'react-bootstrap';
 import AppointmentList from './AppointmentList';
 import { getLocation } from '../api/locations';
+import { getAppointmentsByDoctorByDate } from '../api/appointments';
 
 export default function DoctorCard(doctor) {
   const { fullName = '', specialtyId = '', centerId = '', photo = '' } = doctor;
@@ -14,18 +15,37 @@ export default function DoctorCard(doctor) {
   const [showHours, setShowHours] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState(null);
-
-  let dateTemp = new Date(Date.now() + 86400000);
-  let dateTomorrow = dateTemp.toISOString().slice(0, 10);
+  const initialAppointmentHours = [
+    { time: '08:00', available: true, id: 1 },
+    { time: '08:30', available: true, id: 2 },
+    { time: '09:00', available: true, id: 3 },
+    { time: '09:30', available: true, id: 4 },
+    { time: '10:00', available: true, id: 5 },
+    { time: '10:30', available: true, id: 6 },
+    { time: '11:00', available: true, id: 7 },
+    { time: '11:30', available: true, id: 8 },
+    { time: '14:00', available: true, id: 9 },
+    { time: '14:30', available: true, id: 10 },
+    { time: '15:00', available: true, id: 11 },
+    { time: '15:30', available: true, id: 12 },
+    { time: '16:00', available: true, id: 13 },
+    { time: '16:30', available: true, id: 14 },
+    { time: '17:00', available: true, id: 15 },
+    { time: '17:30', available: true, id: 16 },
+  ];
+  const [appointmentHours, setAppointmentHours] = useState(
+    initialAppointmentHours,
+  );
+  let reservedAppointments = [];
 
   const spec = availableSpecialties.filter(
     (item) => item.id === specialtyId,
   )[0];
   const cent = availableCenters.filter((item) => item.id === centerId)[0];
 
-  async function loadAddress(id) {
+  async function loadAddress(centerId) {
     try {
-      const response = await getLocation(id);
+      const response = await getLocation(centerId);
       setSelectedInfo({
         ...selectedInfo,
         specialty: spec.name,
@@ -39,17 +59,40 @@ export default function DoctorCard(doctor) {
     }
   }
 
+  function validateAppointments(initial, reserved) {
+    for (let i = 0; i < reserved.length; i++) {
+      let hour = reserved[i].appointmentDate.slice(11, 16);
+      for (let j = 0; j < initial.length; j++) {
+        let temp = initial[j].time;
+        if (hour == temp) {
+          initial[j].available = false;
+        }
+      }
+    }
+    setAppointmentHours(initial);
+  }
+
+  async function loadAppointments(doctorId, date) {
+    try {
+      const response = await getAppointmentsByDoctorByDate(doctorId, date);
+      reservedAppointments = response.data;
+      validateAppointments(appointmentHours, reservedAppointments);
+    } catch (error) {
+      setError(error);
+    }
+  }
+
   function toggleShow() {
     setShowHours(true);
   }
 
-  function toggleNoShow() {
-    setShowHours(false);
-    searchParams.date = event.target.value;
-  }
+  // function toggleNoShow() {
+  //   setShowHours(false);
+  // }
 
   useEffect(() => {
     loadAddress(cent.locationId);
+    loadAppointments(doctor.id, searchParams.date);
   }, []);
 
   return (
@@ -90,7 +133,10 @@ export default function DoctorCard(doctor) {
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">
             {showHours ? (
               <Container className="d-flex flex gap-1 flex-wrap justify-content-center align-items-center">
-                <AppointmentList selectedInfo={selectedInfo} />
+                <AppointmentList
+                  selectedInfo={selectedInfo}
+                  appointmentHours={appointmentHours}
+                />
               </Container>
             ) : (
               <Button
