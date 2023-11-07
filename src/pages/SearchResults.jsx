@@ -9,8 +9,12 @@ import { getSpecialties } from '../api/specialties';
 import { getCenters } from '../api/centers';
 
 export default function SearchResults() {
-  const { searchParams, setAvailableCenters, setAvailableSpecialties } =
-    useContext(SearchContext);
+  const {
+    searchParams,
+    setSearchParams,
+    setAvailableCenters,
+    setAvailableSpecialties,
+  } = useContext(SearchContext);
   const [data, setData] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState();
@@ -44,6 +48,9 @@ export default function SearchResults() {
   }
 
   useEffect(() => {
+    const json = localStorage.getItem('searchParams');
+    const data = JSON.parse(json);
+    setSearchParams(data);
     loadSpecialties();
     loadCenters();
     loadResults();
