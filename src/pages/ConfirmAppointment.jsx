@@ -2,14 +2,14 @@ import UserNav from '../components/UserNav';
 import Container from 'react-bootstrap/Container';
 import { Col, Row, Card, Button, CardGroup, Alert } from 'react-bootstrap';
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import UserContext from '../containers/UserContext';
 import RedirectionButton from '../components/ButtonPay';
 import { createAppointment } from '../api/appointments';
 
 export default function ConfirmAppointment() {
   const { user } = useContext(UserContext);
-
+  const [isReserved, setIsReserved] = useState(false);
   const json = localStorage.getItem('appointmentData');
   const selectedData = JSON.parse(json);
 
@@ -25,11 +25,11 @@ export default function ConfirmAppointment() {
       payload.userId = user.id;
       const fullDate = `${selectedData.date}T${selectedData.time}:00.000Z`;
       payload.appointmentDate = fullDate;
-      // console.log(payload);
 
       const response = await createAppointment(payload);
-      // eslint-disable-next-line no-unused-vars
-      const resp = response.data;
+      if (response.data.status === 'Reserved') {
+        setIsReserved(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -105,12 +105,14 @@ export default function ConfirmAppointment() {
                 type="submit"
                 onClick={handleReserve}
                 className={
-                  user ? 'mb-5 text-white' : 'mb-5 text-white disabled'
+                  user && !isReserved
+                    ? 'mb-5 text-white'
+                    : 'mb-5 text-white disabled'
                 }
               >
                 Reservar cita
               </Button>
-              {user ? <RedirectionButton /> : null}
+              {user && isReserved ? <RedirectionButton /> : null}
             </CardGroup>
           </Col>
         </Row>
