@@ -32,6 +32,18 @@ export async function getAppointment(id) {
   }
 }
 
+export async function getAppointmentsByDoctorByDate(id, date) {
+  try {
+    const { data: response } = await http.get(`/v1/appointments/${id}/${date}`);
+    const data = response.data.map(transformAppointment);
+    return {
+      data,
+    };
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
+}
+
 export async function createAppointment(payload) {
   try {
     const { data: response } = await http.post('/v1/appointments/', payload);
