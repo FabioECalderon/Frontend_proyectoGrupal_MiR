@@ -35,3 +35,7 @@ body {
 .review-card {
   background-color: #9ae6cc;
 }
+
+:hover.button-hour {
+  color: white;
+}

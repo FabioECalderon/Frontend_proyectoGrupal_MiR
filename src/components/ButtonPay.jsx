@@ -1,8 +1,12 @@
 import { Button } from 'react-bootstrap';
 import { createOrder } from '../api/createOrder';
 
-export default function RedirectionButton() {
+export default function RedirectionButton(reservedAppointment) {
   const handleRedirection = async () => {
+    localStorage.setItem(
+      'reservedAppointment',
+      JSON.stringify(reservedAppointment),
+    );
     createOrder();
   };
 

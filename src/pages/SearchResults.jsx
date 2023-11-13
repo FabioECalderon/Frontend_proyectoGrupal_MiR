@@ -61,17 +61,17 @@ export default function SearchResults() {
       {/* <section className="d-flex justify-content-center">
         <div className="d-flex flex-wrap">
           <div className="p-3 me-lg-5">
-            <h3>Refina tu búsqueda</h3>
+            <h5>Refina tu búsqueda</h5>
           </div>
           <AppointmentRefine />
         </div>
       </section> */}
 
       <section id="resultsSection" className=" bg-light">
-        <h4 className="px-5 pt-5">
+        <h5 className="p-3">
           {' '}
-          Mostrando los primeros 10 resultados para los criterios seleccionados
-        </h4>
+          Mostrando {data.length} resultados para los criterios seleccionados
+        </h5>
         <Col className="pb-5 container-fluid d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <ResultList list={data} />
         </Col>

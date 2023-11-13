@@ -55,7 +55,7 @@ export default function DoctorCard(doctor) {
         date: searchParams.date,
       });
     } catch (error) {
-      setError(error);
+      console.log(error);
     }
   }
 
@@ -121,13 +121,13 @@ export default function DoctorCard(doctor) {
         </Col>
         <Col style={{ width: '16rem' }}>
           <Card.Title className="d-flex justify-content-center gap-2 align-items-center fs-6">
-            {/* <Button variant="secondary" className="text-white rounded-pill">
+            <Button variant="secondary" className="text-white rounded-pill">
               <i className="bi bi-caret-left-fill "></i>
-            </Button> */}
+            </Button>
             {searchParams.date}
-            {/* <Button variant="secondary" className="text-white rounded-pill">
+            <Button variant="secondary" className="text-white rounded-pill">
               <i className="bi bi-caret-right-fill"></i>
-            </Button> */}
+            </Button>
           </Card.Title>
 
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">

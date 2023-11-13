@@ -16,8 +16,8 @@ export default function AppointmentList({ selectedInfo, appointmentHours }) {
     return (
       <Button
         variant="outline-primary"
-        style={{ width: '4.2rem' }}
-        className={item.available ? 'fs-6' : 'fs-6 disabled'}
+        style={{ width: '4.2rem', fontSize: '14px' }}
+        className={item.available ? 'button-hour' : 'button-hour disabled'}
         key={item.id}
         name={item.time}
         onClick={handleSubmit}
