@@ -10,14 +10,13 @@ import { createAppointment } from '../api/appointments';
 export default function ConfirmAppointment() {
   const { user } = useContext(UserContext);
   const [isReserved, setIsReserved] = useState(false);
+  const [reservedAppointment, setReservedAppointment] = useState('');
   const json = localStorage.getItem('appointmentData');
   const selectedData = JSON.parse(json);
 
   async function handleReserve() {
     try {
       const payload = {
-        userId: '',
-        appointmentDate: '',
         status: 'Reserved',
       };
       payload.centerId = selectedData.centerId;
@@ -29,6 +28,7 @@ export default function ConfirmAppointment() {
       const response = await createAppointment(payload);
       if (response.data.status === 'Reserved') {
         setIsReserved(true);
+        setReservedAppointment(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -112,7 +112,11 @@ export default function ConfirmAppointment() {
               >
                 Reservar cita
               </Button>
-              {user && isReserved ? <RedirectionButton /> : null}
+              {user && isReserved ? (
+                <RedirectionButton
+                  reservedAppointmentId={reservedAppointment}
+                />
+              ) : null}
             </CardGroup>
           </Col>
         </Row>

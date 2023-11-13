@@ -10,20 +10,21 @@ import {} from 'react';
 export default function SuccessPurchase() {
   const { user } = useContext(UserContext);
   const [data, setData] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState();
 
   async function handleConfirmationEmail() {
     try {
+      console.log(user);
       const response = await sendConfirmation(user.email);
-      setData(response);
+      console.log(user);
+      setData(response.data);
+      console.log(data);
     } catch (error) {
       setError(error);
+      console.log(error);
     }
   }
-
-  console.log(data);
-  console.log(error);
-  console.log(user);
 
   useEffect(() => {
     handleConfirmationEmail();

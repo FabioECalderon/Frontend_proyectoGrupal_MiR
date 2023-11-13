@@ -55,6 +55,29 @@ export default function DoctorCard(doctor) {
         date: searchParams.date,
       });
     } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function validateAppointments(initial, reserved) {
+    for (let i = 0; i < reserved.length; i++) {
+      let hour = reserved[i].appointmentDate.slice(11, 16);
+      for (let j = 0; j < initial.length; j++) {
+        let temp = initial[j].time;
+        if (hour == temp) {
+          initial[j].available = false;
+        }
+      }
+    }
+    setAppointmentHours(initial);
+  }
+
+  async function loadAppointments(doctorId, date) {
+    try {
+      const response = await getAppointmentsByDoctorByDate(doctorId, date);
+      reservedAppointments = response.data;
+      validateAppointments(appointmentHours, reservedAppointments);
+    } catch (error) {
       setError(error);
     }
   }
@@ -121,13 +144,13 @@ export default function DoctorCard(doctor) {
         </Col>
         <Col style={{ width: '16rem' }}>
           <Card.Title className="d-flex justify-content-center gap-2 align-items-center fs-6">
-            {/* <Button variant="secondary" className="text-white rounded-pill">
+            <Button variant="secondary" className="text-white rounded-pill">
               <i className="bi bi-caret-left-fill "></i>
-            </Button> */}
+            </Button>
             {searchParams.date}
-            {/* <Button variant="secondary" className="text-white rounded-pill">
+            <Button variant="secondary" className="text-white rounded-pill">
               <i className="bi bi-caret-right-fill"></i>
-            </Button> */}
+            </Button>
           </Card.Title>
 
           <Card.Body className="d-flex flex flex-column justify-content-center align-items-center">

@@ -20,3 +20,25 @@ export async function signIn({ email, password }) {
     return Promise.reject(error);
   }
 }
+
+export async function getUser(userId) {
+  try {
+    const { data: response } = await http.get(`/users/${userId}`);
+    const data = response.data;
+    return { data };
+  } catch (error) {
+    console.log(JSON.stringify(error, null, 2));
+    return Promise.reject(error);
+  }
+}
+
+export async function getUserAppointments(userId) {
+  try {
+    const { data: response } = await http.get(`/users/${userId}/appointments`);
+    const data = response.data;
+    return { data };
+  } catch (error) {
+    console.log(JSON.stringify(error, null, 2));
+    return Promise.reject(error);
+  }
+}
