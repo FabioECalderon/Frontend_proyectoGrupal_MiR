@@ -82,29 +82,6 @@ export default function DoctorCard(doctor) {
     }
   }
 
-  function validateAppointments(initial, reserved) {
-    for (let i = 0; i < reserved.length; i++) {
-      let hour = reserved[i].appointmentDate.slice(11, 16);
-      for (let j = 0; j < initial.length; j++) {
-        let temp = initial[j].time;
-        if (hour == temp) {
-          initial[j].available = false;
-        }
-      }
-    }
-    setAppointmentHours(initial);
-  }
-
-  async function loadAppointments(doctorId, date) {
-    try {
-      const response = await getAppointmentsByDoctorByDate(doctorId, date);
-      reservedAppointments = response.data;
-      validateAppointments(appointmentHours, reservedAppointments);
-    } catch (error) {
-      setError(error);
-    }
-  }
-
   function toggleShow() {
     setShowHours(true);
   }

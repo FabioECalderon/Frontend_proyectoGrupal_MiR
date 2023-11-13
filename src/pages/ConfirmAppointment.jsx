@@ -113,9 +113,7 @@ export default function ConfirmAppointment() {
                 Reservar cita
               </Button>
               {user && isReserved ? (
-                <RedirectionButton
-                  reservedAppointmentId={reservedAppointment}
-                />
+                <RedirectionButton reservedAppointment={reservedAppointment} />
               ) : null}
             </CardGroup>
           </Col>
