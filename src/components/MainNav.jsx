@@ -67,10 +67,10 @@ export default function MainNav() {
                     <NavLink to="/user" className="dropdown-item">
                       Zona de usuario
                     </NavLink>
-                    <NavLink to="/user" className="dropdown-item">
+                    <NavLink to="/user/config" className="dropdown-item">
                       Configurar cuenta
                     </NavLink>
-                    <NavLink to="/user/appointments" className="dropdown-item">
+                    <NavLink to="/user/citas" className="dropdown-item">
                       Mis citas
                     </NavLink>
                     {user && user.userType === 'admin' && (

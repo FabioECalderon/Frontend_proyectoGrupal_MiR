@@ -72,7 +72,7 @@ function App() {
               }
             />
             <Route
-              path="configuration"
+              path="config"
               element={
                 <ProtectedRoute>
                   <UserConfiguration />
