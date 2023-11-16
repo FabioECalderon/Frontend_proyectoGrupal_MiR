@@ -17,7 +17,7 @@ export default function Home() {
           <div>
             <h3>Especialidades más buscadas</h3>
           </div>
-          <div className="container md-col-8 d-flex flex-wrap justify-content-around border border-black">
+          <div className="container md-col-8 d-flex flex-wrap justify-content-around border form-control">
             <button
               type="button"
               className="btn btn-lg m-3 py-4 btn-secondary text-white"
@@ -34,34 +34,46 @@ export default function Home() {
               type="button"
               className="btn btn-lg m-3 py-4 btn-secondary text-white"
             >
-              Nutrición
+              Optometría
             </button>
           </div>
         </div>
       </section>
 
       <section id="newDoctors" className="p-5">
-        <div className="container md-col-8 d-flex flex-column align-items-start">
+        <div className="container md-col-8 d-flex flex-column align-items-start ">
           <div>
             <h3>Nuevos profesionales</h3>
           </div>
-          <div className="container lg-col-8 d-flex flex-wrap justify-content-around border border-black">
-            <div className="m-3 d-flex flex-column">
-              <img src="https://placehold.co/180x120" />
+          <div className="container lg-col-8 d-flex flex-wrap justify-content-around border form-control">
+            <div className="m-3 d-flex flex-column align-items-center">
+              <img
+                src="https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png"
+                className="rounded-circle"
+                style={{ width: '160px' }}
+              />
               <div>
-                <span>Nombre </span> - <span> Especialidad</span>
+                <span>Monica Carrera </span> - <span> Pediatría</span>
               </div>
             </div>
-            <div className="m-3 d-flex flex-column">
-              <img src="https://placehold.co/180x120" />
+            <div className="m-3 d-flex flex-column align-items-center">
+              <img
+                src="https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png"
+                className="rounded-circle"
+                style={{ width: '160px' }}
+              />
               <div>
-                <span>Nombre </span> - <span> Especialidad</span>
+                <span>Maria Perez </span> - <span> Medicina general</span>
               </div>
             </div>
-            <div className="m-3 d-flex flex-column">
-              <img src="https://placehold.co/180x120" />
+            <div className="m-3 d-flex flex-column align-items-center">
+              <img
+                src="https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png"
+                className="rounded-circle"
+                style={{ width: '160px' }}
+              />
               <div>
-                <span>Nombre </span> - <span> Especialidad</span>
+                <span>Nicolás Velez </span> - <span> Optometría</span>
               </div>
             </div>
           </div>
@@ -70,7 +82,7 @@ export default function Home() {
 
       <section id="faqs" className="p-5">
         <div className="container md-col-8 d-flex flex-wrap justify-content-between">
-          <div className="d-flex flex-column justify-content-center">
+          <div className="d-flex flex-column justify-content-center ">
             <h3>Preguntas frecuentes</h3>
             <h5 className="py-2">
               Podrás resolver, todas tus dudas en materia de salud.
@@ -82,8 +94,10 @@ export default function Home() {
             </ul>
           </div>
           <div className="px-md-5">
-            */ TODO Replace faqs image/*
-            <img src="" alt="Faqs" />
+            <img
+              src="https://res.cloudinary.com/di4otf7td/image/upload/v1700145288/Assets/faqs_halpqy.png"
+              alt="Faqs"
+            />
           </div>
         </div>
       </section>
@@ -136,16 +150,13 @@ export default function Home() {
             <div className="carousel-item active">
               <div className="card text-center h-100">
                 <div className="card-body d-flex flex-column align-items-center review-card">
-                  <p className="card-text w-50">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nulla quam velit, vulputate eu pharetra nec, mattis ac
-                    neque.
-                  </p>
+                  <p className="card-text w-50">Muy práctica y util.</p>
                   <img
-                    src="https://placehold.co/80x80"
+                    src="https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png"
                     className="rounded-circle"
+                    style={{ width: '80px' }}
                   />
-                  <h5 className="py-2">Faustino Asprilla - Usuario</h5>
+                  <h5 className="py-2">Jorge Pinzón - Usuario</h5>
                 </div>
               </div>
             </div>
@@ -153,34 +164,28 @@ export default function Home() {
               <div className="card text-center h-100">
                 <div className="card-body d-flex flex-column align-items-center review-card">
                   <p className="card-text w-50">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nulla quam velit, vulputate eu pharetra nec, mattis ac
-                    neque. Duis vulputate commodo lectus, ac blandit elit
-                    tincidunt id.
+                    Ya puedo agendar mis citas sin necesidad de llamar.
                   </p>
                   <img
-                    src="https://placehold.co/80x80"
+                    src="https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png"
                     className="rounded-circle"
+                    style={{ width: '80px' }}
                   />
-                  <h5 className="py-2">Carlos Valderrama- Médico general</h5>
+                  <h5 className="py-2">Carlos Cortés - Usuario</h5>
                 </div>
               </div>
             </div>
             <div className="carousel-item">
               <div className="card text-center h-100">
                 <div className="card-body d-flex flex-column align-items-center review-card">
-                  <p className="card-text w-50">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nulla quam velit, vulputate eu pharetra nec, mattis ac
-                    neque. Duis vulputate commodo lectus, ac blandit elit
-                    tincidunt id.
-                  </p>
+                  <p className="card-text w-50">Excelente, muy recomendada.</p>
                   <img
-                    src="https://placehold.co/80x80"
+                    src="https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png"
                     className="rounded-circle"
+                    style={{ width: '80px' }}
                   />
 
-                  <h5 className="py-2">Leonel Alvarez - Usuario</h5>
+                  <h5 className="py-2">Leonardo Alvarez - Usuario</h5>
                 </div>
               </div>
             </div>

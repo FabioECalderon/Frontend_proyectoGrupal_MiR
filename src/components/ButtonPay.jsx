@@ -11,8 +11,8 @@ export default function RedirectionButton(reservedAppointment) {
   };
 
   return (
-    <Button className="mb-5 text-white" onClick={handleRedirection}>
-      Paga tu cita medica con{' '}
+    <Button className="mb-2 text-white" onClick={handleRedirection}>
+      Paga con{' '}
       <span style={{ fontWeight: 'bold', color: 'yellow' }}>Mercado Pago</span>
     </Button>
   );

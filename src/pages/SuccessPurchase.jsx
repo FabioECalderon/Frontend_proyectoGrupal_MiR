@@ -6,6 +6,7 @@ import { useContext, useState, useEffect } from 'react';
 import UserContext from '../containers/UserContext';
 import { sendConfirmation } from '../api/sendemail';
 import {} from 'react';
+import { updateAppointment } from '../api/appointments';
 
 export default function SuccessPurchase() {
   const { user } = useContext(UserContext);
@@ -26,9 +27,22 @@ export default function SuccessPurchase() {
     }
   }
 
+  async function handleConfirmAppointmentStatus() {
+    try {
+      const payload = {};
+      payload.status = 'Confirmed';
+      const json = localStorage.getItem('reservedAppointment');
+      const id = JSON.parse(json);
+      updateAppointment({ id, payload });
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     handleConfirmationEmail();
-    // handleConfirmAppointmentStatus();
+    handleConfirmAppointmentStatus();
   }, []);
 
   return (

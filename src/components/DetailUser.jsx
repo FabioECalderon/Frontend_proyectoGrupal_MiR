@@ -1,69 +1,130 @@
+/* eslint-disable react/prop-types */
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-export default function DetailUser() {
+export default function DetailUser({ user, handleUpdateUser }) {
+  const [editOn, setEditOn] = useState(false);
+
+  // console.log(user);
+  // const userPhoto = user.photo;
+  function toggleEdit() {
+    setEditOn((prev) => !prev);
+  }
+
+  function onSubmit(event) {
+    event.preventDefault();
+
+    const { photo } = event.target.elements;
+    const formData = new FormData();
+    // formData.append(phone, phone.value);
+    formData.append(photo, photo.files[0]);
+
+    console.log(photo.files[0]);
+    const userId = user.id;
+    handleUpdateUser({ userId, formData });
+    setEditOn(false);
+  }
+
   return (
     <>
-      <Form>
-        <Form.Group as={Row} className="mb-3">
-          <Form.Label column md="3">
-            Código del usuario
-          </Form.Label>
-          <Col sm="9">
-            <Form.Control
-              type="text"
-              placeholder="Asignación automática"
-              readOnly
-            />
-          </Col>
-        </Form.Group>
+      <Form onSubmit={onSubmit}>
         <Row className="container">
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Nombre del centro médico"
-              />
+              <Form.Label>Nombre:</Form.Label>
+              <p>{user.fullName}</p>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control type="email" placeholder="email" />
+              <Form.Label>Número de identificación:</Form.Label>
+              <p>{user.citizenshipNumber}</p>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Dirección</Form.Label>
-              <Form.Control placeholder="Dirección" />
-              <Form.Check type="checkbox" label="Seleccionar en mapa" />
+              <Form.Label>Género:</Form.Label>
+              <p>{user.gender}</p>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Ciudad</Form.Label>
-              <Form.Control />
+              <Form.Label>Correo electrónico:</Form.Label>
+              <p>{user.email}</p>
+            </Form.Group>
+            {/* <Form.Group className="mb-3">
+              <Form.Label>Teléfono:</Form.Label>
+              {editOn ? (
+                <Form.Control placeholder="Teléfono" name="phone" />
+              ) : (
+                <p>{user.phone}</p>
+              )}
+            </Form.Group> */}
+            <Form.Group className="mb-3">
+              <Form.Label>Dirección:</Form.Label>
+              {editOn ? (
+                <Form.Control placeholder={user.location.address} />
+              ) : (
+                <p>{user.location.address}</p>
+              )}
             </Form.Group>
             <Form.Group className="mb-3">
+              <Form.Label>Ciudad:</Form.Label>
+              {editOn ? (
+                <select name="gender" className="form-control">
+                  <option className="form-control">Bogotá</option>
+                </select>
+              ) : (
+                <p>{user.location.city}</p>
+              )}
+            </Form.Group>
+
+            {/* <Form.Group className="mb-3">
               <Form.Check type="checkbox" label="Usuario habilitado" />
-            </Form.Group>
+            </Form.Group> */}
           </Col>
           <Col md={6}>
-            <Form.Group className="mb-3 d-flex flex-column">
-              <Form.Label>Foto</Form.Label>
-              <img src="https://placehold.co/80x40"></img>
+            <Form.Group className="mb-4 d-flex flex-column">
+              <Form.Label></Form.Label>
+              <img
+                src={
+                  user.photo ??
+                  'https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png'
+                }
+                style={{ width: '18rem' }}
+              ></img>
             </Form.Group>
-            <Form.Group className="mb-3 d-flex flex-column">
+            {editOn ? (
+              <Form.Group className="mb-3">
+                <Form.Control type="file" name="photo" />
+              </Form.Group>
+            ) : null}
+            {/* <Form.Group className="mb-3 d-flex flex-column">
               <Button variant="secondary" type="button" className="my-3">
                 Ver historial de citas médicas
               </Button>
-            </Form.Group>
+            </Form.Group> */}
           </Col>
         </Row>
-        <Form.Group className="mb-3 d-flex">
-          <Button variant="primary" type="submit" className="ms-auto">
-            Guardar
+        <Form.Group className="my-5 d-flex gap-3">
+          <Button
+            variant="primary"
+            className={editOn ? ' disabled text-white' : 'text-white'}
+            onClick={toggleEdit}
+          >
+            Editar datos
           </Button>
-          <Button variant="primary" type="submit" className="mx-2" disabled>
-            Crear nuevo
-          </Button>
+          {editOn ? (
+            <>
+              <Button variant="primary" type="submit" className="text-white">
+                Guardar
+              </Button>
+              <Button
+                variant="secondary"
+                className="text-white"
+                onClick={toggleEdit}
+              >
+                Cancelar
+              </Button>
+            </>
+          ) : null}
         </Form.Group>
       </Form>
     </>

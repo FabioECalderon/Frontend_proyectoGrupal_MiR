@@ -106,8 +106,8 @@ export default function ConfirmAppointment() {
                 onClick={handleReserve}
                 className={
                   user && !isReserved
-                    ? 'mb-5 text-white'
-                    : 'mb-5 text-white disabled'
+                    ? 'mb-2 text-white'
+                    : 'mb-2 text-white disabled'
                 }
               >
                 Reservar cita

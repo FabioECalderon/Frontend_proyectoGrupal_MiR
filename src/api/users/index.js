@@ -21,6 +21,19 @@ export async function signIn({ email, password }) {
   }
 }
 
+export async function signUp(payload) {
+  try {
+    const { data: response } = await http.post('/v1/users/', payload);
+
+    const data = response.data;
+    return {
+      data,
+    };
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
+}
+
 export async function getUser(userId) {
   try {
     const { data: response } = await http.get(`/users/${userId}`);
@@ -40,5 +53,18 @@ export async function getUserAppointments(userId) {
   } catch (error) {
     console.log(JSON.stringify(error, null, 2));
     return Promise.reject(error);
+  }
+}
+
+export async function updateUser({ userId, payload }) {
+  try {
+    const { data: response } = await http.put(`/v1/users/${userId}/`, payload);
+
+    const data = response.data;
+    return {
+      data,
+    };
+  } catch (error) {
+    return Promise.reject(error.message);
   }
 }
