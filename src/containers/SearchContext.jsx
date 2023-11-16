@@ -66,28 +66,28 @@ export function SearchProvider({ children }) {
     }
   }, [availableSpecialties]);
 
-  // // //Mounted searchParams
-  // useEffect(() => {
-  //   const json = localStorage.getItem('searchParams');
-  //   if (json) {
-  //     try {
-  //       const data = JSON.parse(json);
-  //       setSearchParams(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  // }, []);
+  // //Mounted searchParams
+  useEffect(() => {
+    const json = localStorage.getItem('searchParams');
+    if (json) {
+      try {
+        const data = JSON.parse(json);
+        setSearchParams(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, []);
 
-  // //Updated searchParams
-  // useEffect(() => {
-  //   if (searchParams === null) {
-  //     localStorage.removeItem('searchParams');
-  //   }
-  //   if (searchParams !== undefined) {
-  //     localStorage.setItem('searchParams', JSON.stringify(searchParams));
-  //   }
-  // }, [searchParams]);
+  //Updated searchParams
+  useEffect(() => {
+    if (searchParams === null) {
+      localStorage.removeItem('searchParams');
+    }
+    if (searchParams !== undefined) {
+      localStorage.setItem('searchParams', JSON.stringify(searchParams));
+    }
+  }, [searchParams]);
 
   return (
     <SearchContext.Provider
