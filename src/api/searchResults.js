@@ -3,43 +3,42 @@ import http from './http';
 export async function getResults({ centerId, specialtyId }) {
   // console.log(centerId);
   // console.log(specialtyId);
-  if (centerId === '' && specialtyId === '') {
-    try {
-      const { data: response } = await http.get('/v1/doctors');
-      const data = response.data;
+
+  try {
+    const { data: response } = await http.get('/v1/doctors');
+    const data1 = response.data;
+    if (centerId === '' && specialtyId === '') {
+      const data = [...data1];
       return {
         data,
       };
-    } catch (error) {
-      return Promise.reject(error.message);
     }
-  }
-
-  if (centerId == !'' && specialtyId === '') {
-    try {
-      const { data: response } = await http.get(`/centers/${centerId}/doctors`);
-      const data = response.data;
-      console.log(data);
+    if (centerId != '' && specialtyId === '') {
+      const data = data1.filter((element) => element.centerId == centerId);
       return {
         data,
       };
-    } catch (error) {
-      return Promise.reject(error.message);
     }
-  }
-
-  if (centerId === '' && specialtyId == !'') {
-    try {
-      const { data: response } = await http.get(
-        `/specialties/${specialtyId}/doctors`,
+    if (centerId === '' && specialtyId != '') {
+      const data = data1.filter(
+        (element) => element.specialtyId == specialtyId,
       );
-      const data = response.data;
-      console.log(data);
       return {
         data,
       };
-    } catch (error) {
-      return Promise.reject(error.message);
     }
+
+    if (centerId != '' && specialtyId != '') {
+      const data = data1.filter(
+        (element) =>
+          element.specialtyId == specialtyId && element.centerId == centerId,
+      );
+
+      return {
+        data,
+      };
+    }
+  } catch (error) {
+    return Promise.reject(error.message);
   }
 }

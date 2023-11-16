@@ -15,7 +15,7 @@ export default function UserNav() {
           Especialistas Guardados
         </NavLink> */}
         <NavLink to="/user/config" className="nav-link">
-          Configuración de la cuenta
+          Actualizar cuenta
         </NavLink>
         <NavLink to="/user/faqs" className="nav-link">
           Preguntas frecuentes

@@ -1,59 +1,51 @@
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from 'react';
-import { getSpecialties } from '../api/specialties';
-import { getCenters } from '../api/centers';
-import SearchContext from '../containers/SearchContext';
 
-export default function AppointmentRefine() {
+import SearchContext from '../containers/SearchContext';
+import { useNavigate } from 'react-router-dom';
+
+export default function AppointmentRefine({ loadResults }) {
   const navigate = useNavigate();
-  const [availableSpecialties, setAvailableSpecialties] = useState([]);
-  const [availableCenters, setAvailableCenters] = useState([]);
-  const [selectedCenter, setSelectedCenter] = useState(searchParams.specialty);
+
+  const {
+    setSearchParams,
+    searchParams,
+    availableSpecialties,
+    availableCenters,
+  } = useContext(SearchContext);
+
+  const [selectedCenter, setSelectedCenter] = useState(searchParams.center);
   const [selectedDate, setSelectedDate] = useState(searchParams.date);
   const [selectedSpecialty, setSelectedSpecialty] = useState(
     searchParams.specialty,
   );
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState('');
-  const { searchParams, setSearchParams } = useContext(SearchContext);
 
-  async function loadSpecialties() {
-    try {
-      const response = await getSpecialties();
-      setAvailableSpecialties(response.data);
-    } catch (error) {
-      setError(error);
-    }
-  }
-  async function loadCenters() {
-    try {
-      const response = await getCenters();
-      setAvailableCenters(response.data);
-    } catch (error) {
-      setError(error);
-    }
-  }
-  let dateTemp = new Date(Date.now());
-  let dateToday = dateTemp.toISOString().slice(0, 10);
+  let dateTemp = new Date(Date.now() + 86400000);
+  let dateTomorrow = dateTemp.toISOString().slice(0, 10);
 
   function handleSubmit(event) {
     event.preventDefault();
-    const selectedDate = event.target.date.value
+    const selectDate = event.target.date.value
       ? event.target.date.value
-      : dateToday;
+      : dateTomorrow;
+    setSelectedDate(selectDate);
     const newSearchParams = {
-      center: selectedCenter.id,
-      date: selectedDate,
-      specialty: selectedSpecialty.id,
+      center: selectedCenter,
+      date: selectDate,
+      specialty: selectedSpecialty,
     };
     console.log(newSearchParams);
     setSearchParams(newSearchParams);
+    const centerId = searchParams.center.id;
+    const specialtyId = searchParams.specialty.id;
+    console.log(centerId);
+    console.log(specialtyId);
+
+    loadResults({ centerId, specialtyId });
     navigate('/searchResults');
   }
-
-  useEffect(() => {
-    loadSpecialties();
-    loadCenters();
-  }, []);
 
   return (
     <div className="d-flex p-3 bg-white">
@@ -71,8 +63,8 @@ export default function AppointmentRefine() {
           <input
             type="date"
             name="date"
-            value={selectedDate}
             className="form-control"
+            min={dateTomorrow}
           />
         </div>
         <div className="mb-2">
@@ -90,10 +82,6 @@ export default function AppointmentRefine() {
           />
         </div>
         <div className="d-flex justify-content-between">
-          <div className="mb-3 form-check d-flex align-items-center">
-            <input type="checkbox" className="form-check-input" />
-            <label className="form-check-label ms-2">Consulta virtual</label>
-          </div>
           <button
             type="submit"
             className="btn btn-lg m-3 btn-primary text-white"
@@ -106,12 +94,19 @@ export default function AppointmentRefine() {
   );
 }
 
-const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
+const SpecialtySelect = ({
+  availableSpecialties = [],
+  setSelectedSpecialty,
+}) => {
   function changeHandler(event) {
-    const selection = availableSpecialties.filter(
-      (item) => item.name === event.target.value,
-    );
-    return setSelectedSpecialty(selection[0]);
+    if (event.target.value === 'Todas') {
+      return setSelectedSpecialty({ id: '' });
+    } else {
+      const selection = availableSpecialties.filter(
+        (item) => item.name === event.target.value,
+      );
+      return setSelectedSpecialty(selection[0]);
+    }
   }
   return (
     <select onClick={changeHandler} className="form-control">
@@ -129,15 +124,19 @@ const SpecialtySelect = ({ availableSpecialties, setSelectedSpecialty }) => {
   );
 };
 
-const CenterSelect = ({ availableCenters, setSelectedCenter, value }) => {
+const CenterSelect = ({ availableCenters = [], setSelectedCenter }) => {
   function changeHandler(event) {
-    const selection = availableCenters.filter(
-      (item) => item.centerName === event.target.value,
-    );
-    return setSelectedCenter(selection[0]);
+    if (event.target.value === 'Todos') {
+      return setSelectedCenter({ id: '' });
+    } else {
+      const selection = availableCenters.filter(
+        (item) => item.centerName === event.target.value,
+      );
+      return setSelectedCenter(selection[0]);
+    }
   }
   return (
-    <select onClick={changeHandler} className="form-control" value={value}>
+    <select onClick={changeHandler} className="form-control">
       <option>Todos</option>
       {availableCenters.map(function (item) {
         return item.enabled && <option key={item.id}>{item.centerName}</option>;

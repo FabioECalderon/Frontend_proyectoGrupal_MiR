@@ -7,6 +7,7 @@ import SearchContext from '../containers/SearchContext';
 import { Col } from 'react-bootstrap';
 import { getSpecialties } from '../api/specialties';
 import { getCenters } from '../api/centers';
+import AppointmentRefine from '../components/AppointmentRefine';
 
 export default function SearchResults() {
   const {
@@ -36,9 +37,7 @@ export default function SearchResults() {
     }
   }
 
-  async function loadResults() {
-    const centerId = searchParams.center.id;
-    const specialtyId = searchParams.specialty.id;
+  async function loadResults({ centerId, specialtyId }) {
     try {
       const response = await getResults({ centerId, specialtyId });
       setData(response.data);
@@ -53,22 +52,24 @@ export default function SearchResults() {
     setSearchParams(data);
     loadSpecialties();
     loadCenters();
-    loadResults();
+    const centerId = searchParams.center.id;
+    const specialtyId = searchParams.specialty.id;
+    loadResults({ centerId, specialtyId });
   }, []);
 
   return (
     <>
-      {/* <section className="d-flex justify-content-center">
+      <section className="d-flex justify-content-center bg-light">
         <div className="d-flex flex-wrap">
           <div className="p-3 me-lg-5">
             <h5>Refina tu búsqueda</h5>
           </div>
-          <AppointmentRefine />
+          <AppointmentRefine loadResults={loadResults} />
         </div>
-      </section> */}
+      </section>
 
       <section id="resultsSection" className=" bg-light">
-        <h5 className="p-3">
+        <h5 className="p-3 pt-5">
           {' '}
           Mostrando {data.length} resultados para los criterios seleccionados
         </h5>

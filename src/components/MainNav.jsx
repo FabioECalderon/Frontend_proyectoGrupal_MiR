@@ -68,7 +68,7 @@ export default function MainNav() {
                       Zona de usuario
                     </NavLink>
                     <NavLink to="/user/config" className="dropdown-item">
-                      Configurar cuenta
+                      Actualizar cuenta
                     </NavLink>
                     <NavLink to="/user/citas" className="dropdown-item">
                       Mis citas
