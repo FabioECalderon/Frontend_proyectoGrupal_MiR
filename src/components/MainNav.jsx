@@ -48,8 +48,12 @@ export default function MainNav() {
               >
                 {user && (
                   <img
-                    src="https://placehold.co/80x80"
+                    src={
+                      user.photo ??
+                      'https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png'
+                    }
                     className="rounded-circle mx-5 p-3"
+                    style={{ width: '160px' }}
                   />
                 )}
                 {!user && (

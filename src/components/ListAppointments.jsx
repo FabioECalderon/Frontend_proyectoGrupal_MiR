@@ -1,33 +1,31 @@
 import Table from 'react-bootstrap/Table';
+import ListUserAppointments from './ListUserAppointments';
 
-export default function ListAppointments() {
+// eslint-disable-next-line react/prop-types
+export default function ListAppointments({ list = [] }) {
+  // console.log(list);
+
+  const activeList = list.filter(
+    (item) => new Date(item.appointmentDate) >= new Date(Date.now()),
+  );
+  // console.log(activeList);
+  // const historicList = list.filter(
+  //   (item) => new Date(item.appointmentDate) < new Date(Date.now()),
+  // );
+
   return (
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
           <th>Fecha</th>
-          <th>Especialidad</th>
+          <th>Centro médico </th>
           <th>Doctor</th>
-          <th>Estado</th>
-          <th>Acciones</th>
+          {/* <th>Estado</th>
+          <th>Acciones</th> */}
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Medicina general</td>
-          <td>Medicina general</td>
-          <td>True</td>
-          <td>True</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Odontología</td>
-          <td>Odontología</td>
-          <td>True</td>
-          <td>True</td>
-        </tr>
-        <tr></tr>
+        {list.length == 0 ? null : <ListUserAppointments list={activeList} />}
       </tbody>
     </Table>
   );

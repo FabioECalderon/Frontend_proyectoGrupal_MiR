@@ -105,7 +105,11 @@ export default function DoctorCard(doctor) {
           <Card.Img
             className="rounded-circle"
             style={{ maxWidth: '10rem' }}
-            src={photo ? photo : 'https://placehold.co/80x80'}
+            src={
+              photo
+                ? photo
+                : 'https://res.cloudinary.com/di4otf7td/image/upload/v1700128069/Assets/User-Profile_xcnjmy.png'
+            }
           />
 
           <Card.Body className="p-1 py-2">

@@ -61,17 +61,18 @@ export default function SearchResults() {
     <>
       <section className="d-flex justify-content-center bg-light">
         <div className="d-flex flex-wrap">
-          <div className="p-3 me-lg-5">
+          {/* <div className="p-3 me-lg-5">
             <h5>Refina tu búsqueda</h5>
-          </div>
+          </div> */}
           <AppointmentRefine loadResults={loadResults} />
         </div>
       </section>
 
       <section id="resultsSection" className=" bg-light">
-        <h5 className="p-3 pt-5">
+        <h5 className="ms-5 p-3 pt-5">
           {' '}
-          Mostrando {data.length} resultados para los criterios seleccionados
+          Mostrando {data.length} resultados para los criterios de búsqueda
+          seleccionados
         </h5>
         <Col className="pb-5 container-fluid d-flex flex-wrap gap-3 justify-content-center align-items-center">
           <ResultList list={data} />

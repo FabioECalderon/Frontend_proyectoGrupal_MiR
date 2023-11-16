@@ -2,13 +2,14 @@ import { createContext, useEffect, useState } from 'react';
 
 const UserContext = createContext({});
 
-const userInitialValues = {
-  createdAt: '',
-  email: '',
-  fullName: '',
-  userType: '',
-};
+// const userInitialValues = {
+//   createdAt: '',
+//   email: '',
+//   fullName: '',
+//   userType: '',
+// };
 
+// eslint-disable-next-line react/prop-types
 export function UserProvider({ children }) {
   const [user, setUser] = useState();
 

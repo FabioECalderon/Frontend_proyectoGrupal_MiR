@@ -7,5 +7,7 @@ export const UserOutput = z
     createdAt: z.string(),
     userType: z.string(),
     id: z.string(),
+    photo: z.string().optional(),
+    phone: z.number().optional(),
   })
   .strict();

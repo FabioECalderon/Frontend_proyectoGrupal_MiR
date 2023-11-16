@@ -8,30 +8,26 @@ export default function User() {
     <Container className="container-fluid">
       <Row>
         <Col>
-          <UserNav/>
+          <UserNav />
         </Col>
         <Col lg={9} className="border-start">
-          <h4  className="py-3 text-center" id="top" >
-            PANEL DEL USUARIO
+          <h4 className="py-3 text-center" id="top">
+            ZONA DE USUARIO
           </h4>
           <Row>
             <Col className="border-top">
-              <h5 className="py-3">
-               Notificaciones
-              </h5>
-              <h6 className="py-3">Ninguna por el momento</h6>
+              <h5 className="py-3">Notificaciones</h5>
+              <h6 className="py-3">No tienes notificaciones por el momento</h6>
             </Col>
           </Row>
           <Row>
-            <Col className="border-top">
-              <h5 className="py-3">
-               Citas
-              </h5>
+            {/* <Col className="border-top">
+              <h5 className="py-3">Citas</h5>
               <h6 className="py-3">Sin Citas</h6>
-            </Col>
+            </Col> */}
           </Row>
         </Col>
       </Row>
     </Container>
-  )
+  );
 }

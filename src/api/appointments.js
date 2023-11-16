@@ -56,3 +56,31 @@ export async function createAppointment(payload) {
     return Promise.reject(error.message);
   }
 }
+
+export async function updateAppointment({ id, payload }) {
+  try {
+    const { data: response } = await http.put(
+      `/v1/appointments/${id}`,
+      payload,
+    );
+
+    const data = transformAppointment(response.data);
+    return {
+      data,
+    };
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
+}
+
+export async function deleteAppointment(id) {
+  try {
+    const { data: response } = await http.delete(`/v1/appointments/${id}`);
+    const data = transformAppointment(response.data);
+    return {
+      data,
+    };
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
+}
